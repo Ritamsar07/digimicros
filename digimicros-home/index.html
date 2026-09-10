@@ -21,6 +21,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/light-mode.css">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>
@@ -207,11 +208,13 @@
         <span>IT &amp; Cybersecurity Advisory · Dallas, Texas</span>
       </span>
       <h1 class="hero-heading" id="heroHeading">
-        <span class="line"><span>Welcome To DigiMicros.</span></span>
-        <span class="line"><span>Excellence Of <span class="accent-text">Execution.</span></span></span>
+        <span class="line"><span>Welcome To</span></span>
+        <span class="line"><span>DigiMicros.</span></span>
+        <span class="line"><span>Excellence Of</span></span>
+        <span class="line"><span><span class="accent-text">Execution.</span></span></span>
       </h1>
       <p class="hero-sub">We're a premier technology and cyber advisory partner, empowering enterprise leadership with strategic resilience, proactive threat defense, cloud acceleration, and AI automation tailored for measurable outcomes.</p>
-      
+
       <div class="hero-ctas">
         <button type="button" class="btn-primary" data-open-modal="requestMeetingModal">Request a Meeting</button>
         <button type="button" class="btn-ghost btn-play-reel" data-open-modal="executiveVideoModal" id="heroWatchReelBtn">
@@ -232,98 +235,9 @@
         <div class="hero-stat"><strong>DigiShield™</strong><span>Proprietary Methodology</span></div>
       </div>
     </div>
-
-    <!-- Right Hero Visual: DigiShield™ Cyber Command & Telemetry Console -->
-    <div class="hero-visual" aria-label="DigiShield Cyber Command Platform">
-      <div class="hero-console">
-        <!-- Terminal Header -->
-        <div class="console-head">
-          <div class="console-dots" aria-hidden="true">
-            <i></i><i></i><i></i>
-          </div>
-          <div class="console-title">
-            <svg class="console-shield-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M12 3l8 3.5v5c0 5-3.5 8.5-8 9.5-4.5-1-8-4.5-8-9.5v-5L12 3Z" stroke="currentColor" stroke-width="1.6"/>
-              <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-            </svg>
-            <span>DIGISHIELD™ COMMAND CENTER</span>
-          </div>
-          <div class="console-badge">
-            <span class="live-beacon" aria-hidden="true"></span>
-            <span>ACTIVE SOC</span>
-          </div>
-        </div>
-
-        <!-- Video Showcase Screen Window -->
-        <div class="console-screen" id="consoleScreen" data-open-modal="executiveVideoModal" role="button" tabindex="0" aria-label="Open full screen executive video reel">
-          <video class="console-mini-video" autoplay muted loop playsinline poster="/assets/hero-command-center.jpg">
-            <source src="/assets/hero-globe.webm" type="video/webm">
-          </video>
-          <div class="screen-scan-line" aria-hidden="true"></div>
-          <div class="screen-hud" aria-hidden="true">
-            <span class="hud-tag top-left"><span class="hud-pulse"></span>THREAT POSTURE: OPTIMAL</span>
-            <span class="hud-tag top-right">DALLAS · SOC-01</span>
-            <span class="hud-tag bottom-left">LATENCY: 4ms · QUANTUM READY</span>
-            <span class="screen-play-cue">
-              <span class="play-cue-circle">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-              </span>
-              <span>Watch Reel (01:45)</span>
-            </span>
-          </div>
-        </div>
-
-        <!-- Real-time Telemetry Grid -->
-        <div class="console-body">
-          <div class="console-telemetry-grid">
-            <div class="telemetry-item">
-              <div class="telemetry-label">
-                <span>Zero-Trust Architecture</span>
-                <b class="status-good">ENFORCED</b>
-              </div>
-              <div class="telemetry-bar"><div class="bar-fill fill-accent" style="width: 98%;"></div></div>
-            </div>
-            <div class="telemetry-item">
-              <div class="telemetry-label">
-                <span>Multi-Cloud Security Posture</span>
-                <b class="status-good">STABLE 99.8%</b>
-              </div>
-              <div class="telemetry-bar"><div class="bar-fill fill-blue" style="width: 94%;"></div></div>
-            </div>
-            <div class="telemetry-item">
-              <div class="telemetry-label">
-                <span>Threat Intelligence Feed</span>
-                <b class="status-good">SYNCED</b>
-              </div>
-              <div class="telemetry-bar"><div class="bar-fill fill-accent" style="width: 100%;"></div></div>
-            </div>
-          </div>
-
-          <div class="console-chips">
-            <span class="console-chip">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.6"/></svg>
-              SOC 2 Type II Certified
-            </span>
-            <span class="console-chip">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3.5 2" stroke="currentColor" stroke-width="1.6"/></svg>
-              Follow-the-Sun SLA
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Floating Support Chip -->
-      <div class="hero-float-card">
-        <span class="float-card-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-        <div>
-          <strong>Executive Advisory</strong>
-          <span>Excellence of Execution</span>
-        </div>
-      </div>
-    </div>
   </div>
+
+
 
   <!-- Ambient Video Controls Bar -->
   <div class="hero-video-bar" aria-label="Video stream controls">

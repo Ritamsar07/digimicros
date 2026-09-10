@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+/* ---- Design tokens matching style.css exactly ---- */
+:root {
+  --color-bg:              #ffffff;
+  --color-bg-alt:          #F6F8FC;
+  --color-bg-dark:         #060B18;
+  --color-surface:         #0D1526;
+  --color-border:          #1E2A44;
+  --color-border-light:    #E3E8F2;
+
+  --color-primary:         #0B3D91;
+  --color-primary-light:   #2E6FF2;
+  --color-primary-dark:    #082C6B;
+  --color-accent:          #00D4C7;
+
+  --color-text:            #101828;
+  --color-text-muted:      #5B6472;
+  --color-text-soft:       #8891A1;
+  --color-text-inverse:    #F5F7FA;
+  --color-text-inverse-muted: #A7B1C7;
+
+  --font-display: "Space Grotesk", "Segoe UI", sans-serif;
+  --font-body:    "Inter", "Segoe UI", sans-serif;
+
+  --radius-sm:   8px;
+  --radius-md:   16px;
+  --radius-lg:   24px;
+  --radius-pill: 999px;
+
+  --shadow-card:       0 8px 30px rgba(11,61,145,0.08);
+  --shadow-card-hover: 0 20px 50px rgba(11,61,145,0.16);
+
+  --ease-out: cubic-bezier(0.16,1,0.3,1);
+  --dur-fast: 180ms;
+  --dur-med:  400ms;
+
+  --header-h: 84px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-text);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+img { max-width: 100%; display: block; }
+a  { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: 0; }
+ul { list-style: none; }
+
+/* ---- Skip link ---- */
+.skip-link {
+  position: absolute;
+  top: -48px;
+  left: 1rem;
+  background: var(--color-primary);
+  color: #fff;
+  padding: 0.5rem 1.5rem;
+  border-radius: var(--radius-sm);
+  z-index: 200;
+  transition: top var(--dur-fast) var(--ease-out);
+}
+.skip-link:focus { top: 1rem; }
+
+/* ---- Page hero (light background, matches page-hero in style.css) ---- */
+.page-hero {
+  background: var(--color-bg-alt);
+  padding-block: 4rem 3rem;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+/* ---- Breadcrumb ---- */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin-bottom: 1.5rem;
+}
+.breadcrumb .sep { opacity: 0.4; }
+
+/* ---- Eyebrow ---- */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: 0.75rem;
+}
+.eyebrow::before {
+  content: "";
+  width: 22px;
+  height: 2px;
+  background: currentColor;
+  display: inline-block;
+}
+
+/* ---- Section pad ---- */
+.section-pad { padding-block: 5rem; }
+.section-alt  { background: var(--color-bg-alt); }
+
+/* ---- Container ---- */
+.container {
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+/* ---- CTA band (replicates .cta-band.section-dark) ---- */
+.cta-band {
+  background: var(--color-bg-dark);
+  color: var(--color-text-inverse);
+  padding-block: 5rem;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}

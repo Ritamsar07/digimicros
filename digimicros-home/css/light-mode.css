@@ -1,0 +1,328 @@
+/* ==========================================================================
+   DigiMicros — Light Mode Override
+   Converts dark-first design to a clean white/minimal aesthetic.
+   Loaded after style.css so all rules override with equal or higher specificity.
+   ========================================================================== */
+
+/* ── Hero: clean left-aligned single-column layout ──────────────────────── */
+.hero-layout {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  max-width: 780px !important;
+  padding-top: calc(var(--header-h) + 2.5rem) !important;
+  padding-bottom: 4rem !important;
+}
+
+.hero-copy {
+  max-width: 680px;
+}
+
+
+/* ── Header: dark navy → white ─────────────────────────────────────────── */
+
+.site-header {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-bottom: 1px solid var(--color-border-light) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+}
+
+.site-header.is-scrolled {
+  background: rgba(255, 255, 255, 0.98) !important;
+  border-bottom: 1px solid var(--color-border-light) !important;
+}
+
+.no-hero .site-header {
+  background: rgba(255, 255, 255, 0.98) !important;
+  border-bottom: 1px solid var(--color-border-light) !important;
+}
+
+/* Brand: white text → dark text */
+.brand {
+  color: var(--color-text) !important;
+}
+
+/* Nav links: light text → dark text */
+.nav-link {
+  color: var(--color-text-muted) !important;
+}
+.nav-link:hover,
+.nav-link:focus-visible,
+.nav-link[aria-current="page"] {
+  color: var(--color-primary) !important;
+}
+
+/* Phone: white → dark */
+.header-phone {
+  color: var(--color-text) !important;
+}
+
+/* Mobile nav toggle border */
+.nav-toggle {
+  border-color: var(--color-border-light) !important;
+  background: var(--color-bg-alt) !important;
+  color: var(--color-text) !important;
+}
+
+/* Dropdown toggle icon */
+.dropdown-toggle-icon {
+  color: var(--color-text-muted) !important;
+}
+
+/* ── Hero: dark navy → white/light ─────────────────────────────────────── */
+.hero {
+  background: var(--color-bg) !important;
+  color: var(--color-text) !important;
+  min-height: 92vh;
+}
+
+/* Remove the dark gradient overlay — let the video be decorative */
+.hero-video-overlay {
+  background:
+    radial-gradient(circle at 20% 50%, rgba(255,255,255,0) 0%, rgba(255,255,255,0.85) 60%, rgba(255,255,255,0.97) 100%),
+    linear-gradient(180deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.3) 40%, rgba(255,255,255,0.92) 100%) !important;
+}
+
+/* Dim the scanlines on light background */
+.hero-scanlines {
+  opacity: 0.12 !important;
+}
+
+/* Video: keep but much lower opacity — decorative */
+.hero-video {
+  opacity: 0.18 !important;
+  filter: saturate(120%) contrast(100%) !important;
+}
+
+/* Pill badge: dark glass → light */
+.pill-badge {
+  background: rgba(246, 248, 252, 0.92) !important;
+  border-color: rgba(11, 61, 145, 0.2) !important;
+  color: var(--color-text) !important;
+  box-shadow: 0 4px 20px rgba(11, 61, 145, 0.08) !important;
+}
+
+/* Pulse dot stays teal — looks fine on light */
+
+/* Hero heading: dark text + gradient accent */
+.hero-heading .line > span {
+  color: var(--color-text);
+}
+.hero-heading .line:nth-child(3) span { transition-delay: 260ms; }
+.hero-heading .line:nth-child(4) span { transition-delay: 360ms; }
+.hero-heading .accent-text {
+  background: linear-gradient(105deg, #00A99E 0%, #2E6FF2 60%, #0B3D91 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  text-shadow: none !important;
+}
+
+/* Hero subtitle text */
+.hero-sub {
+  color: var(--color-text-muted) !important;
+}
+
+/* Stats bar */
+.hero-stats {
+  border-top-color: var(--color-border-light) !important;
+}
+.hero-stat strong {
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  color: var(--color-text) !important;
+}
+.hero-stat span {
+  color: var(--color-text-muted) !important;
+}
+
+/* Play Reel button: dark glass → light */
+.btn-play-reel {
+  background: rgba(246, 248, 252, 0.9) !important;
+  border-color: var(--color-border-light) !important;
+  color: var(--color-text) !important;
+  backdrop-filter: blur(8px) !important;
+}
+.btn-play-reel:hover {
+  background: var(--color-bg-alt) !important;
+  border-color: var(--color-primary) !important;
+  color: var(--color-primary) !important;
+  box-shadow: 0 8px 20px rgba(11, 61, 145, 0.12) !important;
+}
+
+/* Console: dark glass → white card */
+.hero-console {
+  border-color: var(--color-border-light) !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  box-shadow: 0 20px 60px rgba(11, 61, 145, 0.12), 0 0 0 1px var(--color-border-light) !important;
+  backdrop-filter: blur(16px) !important;
+}
+.hero-console:hover {
+  border-color: rgba(11, 61, 145, 0.25) !important;
+  box-shadow: 0 28px 70px rgba(11, 61, 145, 0.18) !important;
+}
+
+.console-head {
+  background: var(--color-bg-alt) !important;
+  border-bottom-color: var(--color-border-light) !important;
+}
+
+.console-title {
+  color: var(--color-text) !important;
+}
+
+.console-badge {
+  background: rgba(0, 212, 199, 0.08) !important;
+  border-color: rgba(0, 212, 199, 0.3) !important;
+}
+
+/* Telemetry grid */
+.telemetry-label {
+  color: var(--color-text-muted) !important;
+}
+.telemetry-bar {
+  background: var(--color-border-light) !important;
+}
+.console-chips {
+  border-top-color: var(--color-border-light) !important;
+}
+.console-chip {
+  background: var(--color-bg-alt) !important;
+  border-color: var(--color-border-light) !important;
+  color: var(--color-text-muted) !important;
+}
+
+/* Float card: dark glass → white */
+.hero-float-card {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: var(--color-border-light) !important;
+  box-shadow: 0 12px 30px rgba(11, 61, 145, 0.12) !important;
+}
+.hero-float-card strong { color: var(--color-text) !important; }
+.hero-float-card span  { color: var(--color-text-muted) !important; }
+
+/* Video bar controls — hidden in light mode */
+.hero-video-bar {
+  display: none !important;
+}
+
+
+/* Scroll cue: light theme */
+.hero-scroll-cue {
+  color: var(--color-text-soft) !important;
+}
+.hero-scroll-cue .wheel {
+  border-color: rgba(11, 61, 145, 0.25) !important;
+}
+
+/* HUD tags */
+.hud-tag {
+  background: rgba(246, 248, 252, 0.88) !important;
+  border-color: var(--color-border-light) !important;
+  color: var(--color-text-muted) !important;
+}
+.hud-tag.top-left {
+  color: var(--color-accent-dim) !important;
+  border-color: rgba(0, 212, 199, 0.3) !important;
+}
+.screen-play-cue span:last-child {
+  background: rgba(255, 255, 255, 0.88) !important;
+  border-color: var(--color-border-light) !important;
+  color: var(--color-text) !important;
+  text-shadow: none !important;
+}
+
+/* ── Support / Quality band cards → white with dark text ───────────────── */
+.support-item {
+  background: #fff !important;
+  border-color: var(--color-border-light) !important;
+  box-shadow: var(--shadow-card) !important;
+}
+
+/* Remove the teal glow blob — looks odd on white */
+.support-item::after {
+  display: none !important;
+}
+
+/* Headings: white → black */
+.support-item h3 {
+  color: var(--color-text) !important;
+}
+
+/* Body text: light-muted → dark muted */
+.support-item p {
+  color: var(--color-text-muted) !important;
+}
+
+/* Badge chip: keep teal accent, just tighten border */
+.support-item .clock-badge {
+  background: rgba(0, 212, 199, 0.08) !important;
+  border-color: rgba(0, 212, 199, 0.3) !important;
+  color: var(--color-accent-dim) !important;
+}
+
+
+/* ── Section-dark / CTA bands → light grey ──────────────────────────────── */
+
+.cta-band,
+.section-dark {
+  background: var(--color-bg-alt) !important;
+  color: var(--color-text) !important;
+}
+
+.cta-band h2,
+.cta-band h3,
+.section-dark h2,
+.section-dark h3,
+.section-dark h4 {
+  color: var(--color-text) !important;
+}
+
+.cta-band p,
+.section-dark p,
+.section-dark .lede {
+  color: var(--color-text-muted) !important;
+}
+
+/* Eyebrow in dark sections → primary blue */
+.section-dark .eyebrow {
+  color: var(--color-primary) !important;
+}
+
+/* Ghost button on light background */
+.cta-band .btn-ghost,
+.section-dark .btn-ghost {
+  border-color: var(--color-border-light) !important;
+  color: var(--color-text) !important;
+}
+.cta-band .btn-ghost:hover,
+.section-dark .btn-ghost:hover {
+  border-color: var(--color-primary) !important;
+  color: var(--color-primary) !important;
+}
+
+/* Light btn on light background → primary btn */
+.cta-band .btn-light,
+.section-dark .btn-light {
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary)) !important;
+  color: #fff !important;
+  box-shadow: 0 10px 30px rgba(46,111,242,0.25) !important;
+}
+
+
+/* Mobile nav panel */
+@media (max-width: 1023px) {
+  .main-nav {
+    background: #fff !important;
+    border-left-color: var(--color-border-light) !important;
+  }
+  .nav-list > li {
+    border-bottom-color: var(--color-border-light) !important;
+  }
+  .nav-scrim {
+    background: rgba(11, 61, 145, 0.3) !important;
+  }
+}
