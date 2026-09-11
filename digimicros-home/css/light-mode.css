@@ -1,5 +1,5 @@
 /* ==========================================================================
-   DigiMicros — Light Mode Override
+   DigiMicros , Light Mode Override
    Converts dark-first design to a clean white/minimal aesthetic.
    Loaded after style.css so all rules override with equal or higher specificity.
    ========================================================================== */
@@ -77,7 +77,7 @@
   min-height: 92vh;
 }
 
-/* Remove the dark gradient overlay — let the video be decorative */
+/* Remove the dark gradient overlay , let the video be decorative */
 .hero-video-overlay {
   background:
     radial-gradient(circle at 20% 50%, rgba(255,255,255,0) 0%, rgba(255,255,255,0.85) 60%, rgba(255,255,255,0.97) 100%),
@@ -89,7 +89,7 @@
   opacity: 0.12 !important;
 }
 
-/* Video: keep but much lower opacity — decorative */
+/* Video: keep but much lower opacity , decorative */
 .hero-video {
   opacity: 0.18 !important;
   filter: saturate(120%) contrast(100%) !important;
@@ -103,7 +103,7 @@
   box-shadow: 0 4px 20px rgba(11, 61, 145, 0.08) !important;
 }
 
-/* Pulse dot stays teal — looks fine on light */
+/* Pulse dot stays teal , looks fine on light */
 
 /* Hero heading: dark text + gradient accent */
 .hero-heading .line > span {
@@ -204,7 +204,7 @@
 .hero-float-card strong { color: var(--color-text) !important; }
 .hero-float-card span  { color: var(--color-text-muted) !important; }
 
-/* Video bar controls — hidden in light mode */
+/* Video bar controls , hidden in light mode */
 .hero-video-bar {
   display: none !important;
 }
@@ -242,7 +242,7 @@
   box-shadow: var(--shadow-card) !important;
 }
 
-/* Remove the teal glow blob — looks odd on white */
+/* Remove the teal glow blob , looks odd on white */
 .support-item::after {
   display: none !important;
 }

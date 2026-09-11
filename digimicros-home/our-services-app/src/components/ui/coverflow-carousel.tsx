@@ -246,7 +246,7 @@ export function CoverflowCarousel({
               nudge(1);
             }
           }}
-          className="cursor-grab overflow-hidden py-10 outline-none focus-visible:ring-2 focus-visible:ring-[#2E6FF2] active:cursor-grabbing"
+          className="cursor-grab overflow-hidden py-10 pb-16 outline-none focus-visible:ring-2 focus-visible:ring-[#2E6FF2] active:cursor-grabbing"
           style={{
             perspective: `calc(var(--cf-card) * ${perspective})`,
             touchAction: "pan-y",
@@ -272,7 +272,7 @@ export function CoverflowCarousel({
                 className={cn(
                   "absolute left-1/2 top-0 aspect-square overflow-hidden rounded-2xl shadow-2xl will-change-transform cursor-pointer",
                   "ring-2 ring-transparent transition-[ring] duration-300",
-                  index === selected && "ring-[#0B3D91] ring-offset-2 ring-offset-white",
+                  index === selected && "ring-[#00D4C7] ring-offset-2 ring-offset-[#060B18]",
                   cardClassName,
                 )}
                 style={{ width: "var(--cf-card)" }}
@@ -341,7 +341,7 @@ export function CoverflowCarousel({
       )}
 
       {showPagination && (
-        <div className="mt-5 flex items-center justify-center gap-2">
+        <div className="cf-pagination flex items-center justify-center gap-2">
           {slides.map((_, index) => (
             <button
               key={index}
@@ -351,7 +351,7 @@ export function CoverflowCarousel({
               onClick={() => goTo(index)}
               className={cn(
                 "h-1.5 rounded-full transition-all duration-300",
-                index === selected ? "w-6 bg-[#0B3D91]" : "w-1.5 bg-[#CBD3E0]",
+                index === selected ? "w-6 bg-[#00D4C7]" : "w-1.5 bg-white/25",
               )}
             />
           ))}

@@ -1,5 +1,5 @@
 /**
- * DigiMicros — Hero Sculpture
+ * DigiMicros , Hero Sculpture
  * Renders an animated 3D ribbon torus-knot sculpture using Three.js.
  * Layered white ribbon strands with glowing cyan edges, soft studio lighting.
  */
@@ -11,7 +11,7 @@
 
   // ── Scene ──────────────────────────────────────────────────────────────────
   const scene = new THREE.Scene();
-  scene.background = null; // transparent — hero background shows through
+  scene.background = null; // transparent , hero background shows through
 
   // ── Camera ─────────────────────────────────────────────────────────────────
   const getSize = () => {
@@ -45,7 +45,7 @@
   const ambient = new THREE.AmbientLight(0xffffff, 0.7);
   scene.add(ambient);
 
-  // Cyan point light — gives the glowing-edge look
+  // Cyan point light , gives the glowing-edge look
   const cyanLight = new THREE.PointLight(0x00d4c7, 4.5, 18);
   cyanLight.position.set(-4, -3, 5);
   scene.add(cyanLight);
@@ -73,7 +73,7 @@
 
     const geo = new THREE.TorusKnotGeometry(knobRadius, tubeRadius, TUBE_SEGS, RADIAL_SEGS, P, Q);
 
-    // Slightly graduated brightness — darker strands near the edges
+    // Slightly graduated brightness , darker strands near the edges
     const b = 0.84 + (1 - Math.abs(t - 0.5) * 2) * 0.14;
     const mat = new THREE.MeshPhysicalMaterial({
       color: new THREE.Color(b, b + 0.015, b + 0.025),

@@ -195,28 +195,27 @@
     var hero = heading.closest(".hero");
     if (hero) hero.classList.add("is-revealed");
   }
-  window.addEventListener("load", function () {
+  // Reveal as soon as the DOM is usable. Waiting on window.load would hold the
+  // headline back until every subresource (the hero video, fonts, images) had
+  // finished downloading, which made the copy appear seconds late.
+  function startHeroReveal() {
     var heroHeading = document.getElementById("heroHeading");
-    if (heroHeading) {
-      window.requestAnimationFrame(function () { revealHero(heroHeading); });
-    }
-  });
-  // Fallback in case 'load' already fired or is slow
-  if (document.readyState === "complete") {
-    revealHero(document.getElementById("heroHeading"));
+    if (!heroHeading) return;
+    window.requestAnimationFrame(function () { revealHero(heroHeading); });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", startHeroReveal, { once: true });
+  } else {
+    // This script is deferred, so the DOM is already parsed by the time it runs
+    startHeroReveal();
   }
 
   /* -----------------------------------------------------------------------
-     Hero Video Controller (Stream switcher, play/pause, sound toggle)
+     Hero background video: keep it playing, muted, with an autoplay fallback
      ----------------------------------------------------------------------- */
   var heroVideo = document.getElementById("heroVideo");
-  var heroVideoSource = document.getElementById("heroVideoSource");
-  var streamBtns = document.querySelectorAll("[data-stream]");
-  var videoPlayPauseBtn = document.getElementById("videoPlayPauseBtn");
-  var videoMuteBtn = document.getElementById("videoMuteBtn");
-
   if (heroVideo) {
-    // Autoplay fallback safeguard
     heroVideo.muted = true;
     var playPromise = heroVideo.play();
     if (playPromise !== undefined) {
@@ -225,61 +224,6 @@
           heroVideo.play().catch(function () {});
           document.removeEventListener("click", startOnUser);
         }, { once: true });
-      });
-    }
-
-    // Stream switching (Neural Matrix vs Global Defense)
-    streamBtns.forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        var targetSrc = btn.getAttribute("data-stream");
-        if (!targetSrc || btn.classList.contains("is-active")) return;
-
-        streamBtns.forEach(function (b) { b.classList.remove("is-active"); });
-        btn.classList.add("is-active");
-
-        heroVideo.style.opacity = "0.2";
-        window.setTimeout(function () {
-          heroVideo.src = targetSrc;
-          heroVideo.load();
-          heroVideo.play().catch(function () {});
-          heroVideo.style.opacity = "";
-        }, 300);
-      });
-    });
-
-    // Play/Pause toggle
-    if (videoPlayPauseBtn) {
-      var iconPause = videoPlayPauseBtn.querySelector(".icon-pause");
-      var iconPlay = videoPlayPauseBtn.querySelector(".icon-play");
-
-      videoPlayPauseBtn.addEventListener("click", function () {
-        if (heroVideo.paused) {
-          heroVideo.play().catch(function () {});
-          heroVideo.classList.remove("is-paused");
-          if (iconPause) iconPause.style.display = "";
-          if (iconPlay) iconPlay.style.display = "none";
-          videoPlayPauseBtn.setAttribute("aria-label", "Pause background video");
-        } else {
-          heroVideo.pause();
-          heroVideo.classList.add("is-paused");
-          if (iconPause) iconPause.style.display = "none";
-          if (iconPlay) iconPlay.style.display = "";
-          videoPlayPauseBtn.setAttribute("aria-label", "Play background video");
-        }
-      });
-    }
-
-    // Mute/Sound toggle
-    if (videoMuteBtn) {
-      videoMuteBtn.addEventListener("click", function () {
-        heroVideo.muted = !heroVideo.muted;
-        if (heroVideo.muted) {
-          videoMuteBtn.title = "Video Muted";
-          videoMuteBtn.style.color = "";
-        } else {
-          videoMuteBtn.title = "Audio Active";
-          videoMuteBtn.style.color = "var(--color-accent)";
-        }
       });
     }
   }
@@ -471,4 +415,67 @@
      ----------------------------------------------------------------------- */
   var yearEl = document.getElementById("copyrightYear");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  /* -----------------------------------------------------------------------
+     Auto-scrolling case study rail: drifts right on its own, pauses while
+     the visitor is interacting with it, loops back to the start at the end.
+     ----------------------------------------------------------------------- */
+  document.querySelectorAll(".case-scroll, .blog-rail").forEach(function (rail) {
+    var wrap = rail.closest(".rail-wrap") || rail.closest("section");
+    var prevBtn = wrap && wrap.querySelector("[data-rail-prev]");
+    var nextBtn = wrap && wrap.querySelector("[data-rail-next]");
+
+    var paused = false;
+    var resumeTimer = null;
+    var STEP_INTERVAL = 4000; // advance one card every 4s
+
+    function pause(ms) {
+      paused = true;
+      if (resumeTimer) window.clearTimeout(resumeTimer);
+      resumeTimer = window.setTimeout(function () { paused = false; }, ms || STEP_INTERVAL);
+    }
+
+    function cardStep() {
+      var card = rail.firstElementChild;
+      if (!card) return rail.clientWidth * 0.8;
+      var styles = window.getComputedStyle(rail);
+      var gap = parseFloat(styles.columnGap || styles.gap || "0") || 0;
+      return card.getBoundingClientRect().width + gap;
+    }
+
+    function nudgeRail(direction) {
+      var max = rail.scrollWidth - rail.clientWidth;
+      var target = rail.scrollLeft + direction * cardStep();
+      // Wrap around at both ends so the arrows never dead-end
+      if (target > max + 1) target = 0;
+      if (target < -1) target = max;
+      // Hold the drift while the click-driven scroll plays out
+      pause(3200);
+      rail.scrollTo({ left: target, behavior: prefersReducedMotion ? "auto" : "smooth" });
+    }
+
+    if (prevBtn) prevBtn.addEventListener("click", function () { nudgeRail(-1); });
+    if (nextBtn) nextBtn.addEventListener("click", function () { nudgeRail(1); });
+
+    if (prefersReducedMotion) return;
+
+    ["pointerdown", "wheel", "touchstart"].forEach(function (evt) {
+      rail.addEventListener(evt, function () { pause(); }, { passive: true });
+    });
+    rail.addEventListener("mouseenter", function () { paused = true; });
+    rail.addEventListener("mouseleave", function () {
+      paused = false;
+      if (resumeTimer) window.clearTimeout(resumeTimer);
+    });
+
+    // Auto-advance one card to the right every 4 seconds, wrapping at the end
+    window.setInterval(function () {
+      if (paused) return;
+      if (rail.scrollWidth <= rail.clientWidth) return;
+      var max = rail.scrollWidth - rail.clientWidth;
+      var target = rail.scrollLeft + cardStep();
+      if (target > max - 1) target = 0;
+      rail.scrollTo({ left: target, behavior: "smooth" });
+    }, STEP_INTERVAL);
+  });
 })();

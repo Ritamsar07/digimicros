@@ -16,12 +16,16 @@
 <meta property="og:image" content="https://digimicros.com/assets/og-image.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="apple-touch-icon" href="/assets/favicon-180.png">
+<!-- Start fetching the hero video during head parse instead of waiting for the
+     body, otherwise the browser only discovers it once it reaches the <video>. -->
+<link rel="preload" as="video" href="/assets/hero-banner.webm" type="video/webm">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/style.css">
-<link rel="stylesheet" href="/css/light-mode.css">
+<link rel="stylesheet" href="/css/style.css?v=20260912002529">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>
@@ -32,15 +36,7 @@
 <header class="site-header" id="siteHeader">
   <div class="container">
     <a href="/" class="brand" aria-label="DigiMicros home">
-      <svg class="brand-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-        <rect x="1" y="1" width="38" height="38" rx="10" stroke="#00D4C7" stroke-width="1.5"/>
-        <path d="M20 8 L30 13 V22 C30 28 26 31.5 20 33 C14 31.5 10 28 10 22 V13 Z" stroke="#2E6FF2" stroke-width="1.6" fill="rgba(46,111,242,0.12)"/>
-        <path d="M15.5 20.5 L18.5 23.5 L25 16.5" stroke="#00D4C7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <span>
-        DigiMicros
-        <small>Excellence Of Execution</small>
-      </span>
+      <img class="brand-logo" src="/assets/logo_image.png" alt="DigiMicros, Future-Proofing Businesses" width="677" height="368">
     </a>
 
     <nav class="main-nav" id="mainNav" aria-label="Primary">
@@ -106,7 +102,8 @@
       <div class="form-grid">
         <div class="form-field full">
           <label for="mtgService">Service of interest</label>
-          <select class="form-select" id="mtgService" name="service" required>
+          <div class="select-wrap">
+            <select class="form-select" id="mtgService" name="service" required>
             <option value="" selected disabled>Select a service</option>
             <option>Digital Transformation - Infrastructure and Application Services</option>
             <option>AI and Automation</option>
@@ -117,6 +114,7 @@
             <option>Audit</option>
             <option>Third Party Risk Management</option>
           </select>
+          </div>
         </div>
         <div class="form-field">
           <label for="mtgDate">Preferred date</label>
@@ -153,37 +151,6 @@
   </div>
 </div>
 
-<!-- ==========================================================================
-     EXECUTIVE VIDEO REEL MODAL
-     ========================================================================== -->
-<div class="modal-overlay modal-video-overlay" id="executiveVideoModal" role="dialog" aria-modal="true" aria-labelledby="videoModalTitle" hidden>
-  <div class="modal modal-video">
-    <div class="modal-head">
-      <div>
-        <p class="eyebrow" style="color:var(--color-accent);">DigiMicros Executive Tour</p>
-        <h3 id="videoModalTitle">Excellence Of Execution Reel</h3>
-      </div>
-      <button type="button" class="modal-close" id="videoModalCloseBtn" aria-label="Close dialog">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-      </button>
-    </div>
-    <div class="modal-video-player">
-      <video id="modalVideoEl" controls playsinline poster="/assets/hero-command-center.jpg">
-        <source src="/assets/hero-globe.webm" type="video/webm">
-        <source src="/assets/hero-neural.webm" type="video/webm">
-        Your browser does not support HTML5 video.
-      </video>
-    </div>
-    <div class="modal-video-footer">
-      <div class="modal-video-desc">
-        <strong>Strategic IT, Cyber &amp; Cloud Advisory</strong>
-        <p>Explore how DigiMicros delivers high-impact digital transformation, cloud modernization, and proactive cybersecurity resilience for forward-thinking enterprises.</p>
-      </div>
-      <button type="button" class="btn-primary" data-open-modal="requestMeetingModal">Request a Meeting</button>
-    </div>
-  </div>
-</div>
-
 <main id="main">
 
 <!-- ==========================================================================
@@ -192,8 +159,9 @@
 <section class="hero section-dark" id="hero">
   <!-- Cinematic Background Video Layer with Interactive Canvas Overlay -->
   <div class="hero-video-wrap" aria-hidden="true">
-    <video class="hero-video" id="heroVideo" autoplay muted loop playsinline poster="/assets/hero-cyber-mesh.jpg">
-      <source id="heroVideoSource" src="/assets/hero-globe.webm" type="video/webm">
+    <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="auto" fetchpriority="high" aria-hidden="true">
+      <source src="/assets/hero-banner.webm" type="video/webm">
+      <source src="/assets/hero-banner.mp4" type="video/mp4">
     </video>
     <canvas class="hero-canvas" id="heroCanvas"></canvas>
     <div class="hero-video-overlay"></div>
@@ -208,21 +176,14 @@
         <span>IT &amp; Cybersecurity Advisory · Dallas, Texas</span>
       </span>
       <h1 class="hero-heading" id="heroHeading">
-        <span class="line"><span>Welcome To</span></span>
-        <span class="line"><span>DigiMicros.</span></span>
+        <span class="line"><span>Welcome To DigiMicros.</span></span>
         <span class="line"><span>Excellence Of</span></span>
-        <span class="line"><span><span class="accent-text">Execution.</span></span></span>
+        <span class="line"><span class="accent-text">Execution.</span></span>
       </h1>
       <p class="hero-sub">We're a premier technology and cyber advisory partner, empowering enterprise leadership with strategic resilience, proactive threat defense, cloud acceleration, and AI automation tailored for measurable outcomes.</p>
 
       <div class="hero-ctas">
         <button type="button" class="btn-primary" data-open-modal="requestMeetingModal">Request a Meeting</button>
-        <button type="button" class="btn-ghost btn-play-reel" data-open-modal="executiveVideoModal" id="heroWatchReelBtn">
-          <span class="btn-play-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-          </span>
-          Watch Executive Reel
-        </button>
         <a class="btn-ghost" href="#services">Explore Services
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
@@ -230,42 +191,14 @@
 
       <div class="hero-stats">
         <div class="hero-stat"><strong>8</strong><span>Advisory Practice Areas</span></div>
-        <div class="hero-stat"><strong>99.98%</strong><span>Resilience Benchmark</span></div>
-        <div class="hero-stat"><strong>24/7/365</strong><span>Follow-the-Sun SOC</span></div>
-        <div class="hero-stat"><strong>DigiShield™</strong><span>Proprietary Methodology</span></div>
+        <div class="hero-stat"><strong>24/7</strong><span>Follow-the-Sun Support</span></div>
+        <div class="hero-stat"><strong>DigiShield</strong><span>Our Proprietary Approach</span></div>
       </div>
     </div>
   </div>
 
 
 
-  <!-- Ambient Video Controls Bar -->
-  <div class="hero-video-bar" aria-label="Video stream controls">
-    <div class="video-stream-selector">
-      <span class="stream-label">Stream:</span>
-      <button type="button" class="stream-btn is-active" id="streamGlobeBtn" data-stream="/assets/hero-globe.webm">
-        <span class="stream-dot"></span>Global Defense
-      </button>
-      <button type="button" class="stream-btn" id="streamNeuralBtn" data-stream="/assets/hero-neural.webm">
-        <span class="stream-dot"></span>Neural Matrix
-      </button>
-    </div>
-    <div class="video-action-btns">
-      <button type="button" class="video-btn" id="videoPlayPauseBtn" aria-label="Pause background video" title="Pause / Play Video">
-        <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-        <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none;"><path d="M8 5v14l11-7z"/></svg>
-      </button>
-      <button type="button" class="video-btn" id="videoMuteBtn" aria-label="Sound status" title="Video Muted">
-        <svg class="icon-muted" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
-        <span class="audio-waves" aria-hidden="true"><i></i><i></i><i></i></span>
-      </button>
-    </div>
-  </div>
-
-  <div class="hero-scroll-cue" aria-hidden="true">
-    <span>Scroll</span>
-    <span class="wheel"></span>
-  </div>
 </section>
 
 <!-- ==========================================================================
@@ -348,7 +281,7 @@
       </div>
       <div class="split-media">
         <div class="media-blob">
-          <svg viewBox="0 0 460 300"><circle cx="230" cy="150" r="90" fill="none" stroke="#0B3D91" stroke-width="1" opacity="0.2"/><circle cx="230" cy="150" r="55" fill="rgba(0,212,199,0.12)" stroke="#00D4C7" stroke-width="1.4"/><path d="M180 150l35 35 65-70" stroke="#0B3D91" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <img src="/assets/vision-strategic-tech.jpg" alt="DigiMicros Strategic Technology Vision" width="460" height="300" loading="lazy">
         </div>
       </div>
     </div>
@@ -363,7 +296,7 @@
       </div>
       <div class="split-media">
         <div class="media-blob">
-          <svg viewBox="0 0 460 300"><rect x="120" y="90" width="220" height="120" rx="14" fill="none" stroke="#0B3D91" stroke-width="1" opacity="0.2"/><path d="M150 190 L200 130 L245 165 L310 100" stroke="#2E6FF2" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><g fill="#00D4C7"><circle cx="150" cy="190" r="4"/><circle cx="200" cy="130" r="4"/><circle cx="245" cy="165" r="4"/><circle cx="310" cy="100" r="5"/></g></svg>
+          <img src="/assets/mission-client-success.jpg" alt="DigiMicros Client Success Mission" width="460" height="300" loading="lazy">
         </div>
       </div>
     </div>
@@ -541,17 +474,25 @@
      ========================================================================== -->
 <section class="section-light section-pad">
   <div class="container">
-    <div class="section-head" style="display:flex;align-items:flex-end;justify-content:space-between;gap:1.5rem;max-width:none;">
+    <div class="section-head section-head-row">
       <div>
         <p class="eyebrow">Case Studies</p>
         <h2>Outcomes We've Helped Deliver</h2>
       </div>
     </div>
 
+    <div class="rail-wrap">
+      <button type="button" class="rail-btn rail-btn-prev" data-rail-prev aria-label="Previous case studies">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button type="button" class="rail-btn rail-btn-next" data-rail-next aria-label="Next case studies">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+
     <div class="case-scroll" data-reveal>
       <article class="case-study-card">
         <div class="case-study-media">
-          <svg viewBox="0 0 400 300"><rect width="400" height="300" fill="#F6F8FC"/><path d="M60 220 L140 150 L200 190 L280 100 L360 150" stroke="#0B3D91" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="280" cy="100" r="6" fill="#00D4C7"/></svg>
+          <img src="/assets/case-study-operational-resilience.jpg" alt="Enhancing Operational Resilience" width="400" height="300" loading="lazy">
         </div>
         <div class="case-study-body">
           <span class="badge">Operational Resilience</span>
@@ -565,7 +506,7 @@
 
       <article class="case-study-card">
         <div class="case-study-media">
-          <svg viewBox="0 0 400 300"><rect width="400" height="300" fill="#EAF0FC"/><rect x="80" y="90" width="240" height="120" rx="12" fill="none" stroke="#2E6FF2" stroke-width="2"/><path d="M110 190 L160 130 L205 165 L280 100" stroke="#00A99E" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <img src="/assets/case-study-process-automation.jpg" alt="Process Transformation and Automation" width="400" height="300" loading="lazy">
         </div>
         <div class="case-study-body">
           <span class="badge">Digital Transformation</span>
@@ -579,7 +520,7 @@
 
       <article class="case-study-card">
         <div class="case-study-media">
-          <svg viewBox="0 0 400 300"><rect width="400" height="300" fill="#F6F8FC"/><path d="M120 210a45 45 0 0 1-10-88 60 60 0 0 1 116-22 50 50 0 0 1 4 100H120Z" fill="none" stroke="#0B3D91" stroke-width="2.5"/></svg>
+          <img src="/assets/case-study-cloud-scalability.jpg" alt="Cloud Cost Reduction and Improved Scalability" width="400" height="300" loading="lazy">
         </div>
         <div class="case-study-body">
           <span class="badge">Cloud &amp; Data Center</span>
@@ -593,7 +534,7 @@
 
       <article class="case-study-card">
         <div class="case-study-media">
-          <svg viewBox="0 0 400 300"><rect width="400" height="300" fill="#EAF0FC"/><path d="M200 90 L250 115 V175 C250 210 228 232 200 242 C172 232 150 210 150 175 V115 Z" fill="rgba(11,61,145,0.12)" stroke="#0B3D91" stroke-width="2"/><path d="M182 160 L196 174 L222 142" stroke="#00A99E" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <img src="/assets/case-study-cybersecurity-framework.jpg" alt="Building A Robust Cybersecurity Framework" width="400" height="300" loading="lazy">
         </div>
         <div class="case-study-body">
           <span class="badge">Cybersecurity</span>
@@ -607,7 +548,7 @@
 
       <article class="case-study-card">
         <div class="case-study-media">
-          <svg viewBox="0 0 400 300"><rect width="400" height="300" fill="#F6F8FC"/><g stroke="#0B3D91" stroke-width="1.5" opacity="0.7"><rect x="90" y="100" width="60" height="100"/><rect x="170" y="70" width="60" height="130"/><rect x="250" y="120" width="60" height="80"/></g></svg>
+          <img src="/assets/case-study-it-modernization.jpg" alt="Modernizing IT Infrastructure" width="400" height="300" loading="lazy">
         </div>
         <div class="case-study-body">
           <span class="badge">Digital Transformation</span>
@@ -618,6 +559,7 @@
           </a>
         </div>
       </article>
+    </div>
     </div>
   </div>
 </section>
@@ -684,19 +626,52 @@
   </div>
 </section>
 
+
 <!-- ==========================================================================
-     LATEST UPDATES (blog)
+     GET IN TOUCH: closing CTA (full contact form lives on /contact-us/)
+     ========================================================================== -->
+<section class="section-dark contact-cta section-pad" id="contact">
+  <div class="container contact-cta-solo" data-reveal>
+    <p class="eyebrow" style="justify-content:center;">Get In Touch</p>
+    <h2>Let's Build Your Roadmap to Execution</h2>
+    <p class="lede">Tell us about your priorities and a DigiMicros advisor will follow up to scope the right engagement, no obligation.</p>
+
+    <div class="cta-actions">
+      <button type="button" class="btn-primary" data-open-modal="requestMeetingModal">Request a Meeting</button>
+      <a class="btn-ghost" href="/contact-us/">Go to Contact Page
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+<!-- ==========================================================================
+     FEATURED INSIGHTS (blog), sits directly above the footer
      ========================================================================== -->
 <section class="section-light section-pad">
   <div class="container">
-    <div class="section-head">
-      <p class="eyebrow">Latest Updates</p>
-      <h2>Insights From Our Advisory Team</h2>
+    <div class="section-head section-head-row">
+      <div>
+        <p class="eyebrow">Featured Insights</p>
+        <h2>Insights From Our Advisory Team</h2>
+      </div>
+      <a class="btn-ghost" href="/blog/">View All Insights
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
     </div>
 
-    <div class="blog-grid" data-reveal-group>
+    <div class="rail-wrap">
+      <button type="button" class="rail-btn rail-btn-prev" data-rail-prev aria-label="Previous insights">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button type="button" class="rail-btn rail-btn-next" data-rail-next aria-label="Next insights">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+
+    <div class="blog-rail" data-reveal-group>
       <article class="blog-card">
-        <div class="blog-media"><svg viewBox="0 0 300 190"><rect width="300" height="190" fill="#EAF0FC"/><path d="M40 140 L100 90 L150 120 L220 60" stroke="#0B3D91" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="blog-media">
+          <img src="/assets/blog-third-party-management.jpg" alt="Mastering the Art of Third-Party Management" width="300" height="190" loading="lazy">
+        </div>
         <div class="blog-body">
           <span class="blog-date">March 15, 2025</span>
           <h3>Mastering the Art of Third-Party Management</h3>
@@ -708,7 +683,9 @@
       </article>
 
       <article class="blog-card">
-        <div class="blog-media"><svg viewBox="0 0 300 190"><rect width="300" height="190" fill="#F6F8FC"/><rect x="60" y="60" width="180" height="90" rx="10" fill="none" stroke="#2E6FF2" stroke-width="2"/></svg></div>
+        <div class="blog-media">
+          <img src="/assets/blog-digital-transformation.jpg" alt="Power of Digital Transformation" width="300" height="190" loading="lazy">
+        </div>
         <div class="blog-body">
           <span class="blog-date">March 13, 2025</span>
           <h3>Power of Digital Transformation</h3>
@@ -720,7 +697,9 @@
       </article>
 
       <article class="blog-card">
-        <div class="blog-media"><svg viewBox="0 0 300 190"><rect width="300" height="190" fill="#EAF0FC"/><circle cx="150" cy="95" r="45" fill="none" stroke="#00A99E" stroke-width="2.5"/><path d="M132 95l13 13 26-30" stroke="#0B3D91" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="blog-media">
+          <img src="/assets/blog-operational-resilience.jpg" alt="The Art of Operational Resilience" width="300" height="190" loading="lazy">
+        </div>
         <div class="blog-body">
           <span class="blog-date">January 15, 2024</span>
           <h3>The Art of Operational Resilience</h3>
@@ -732,7 +711,9 @@
       </article>
 
       <article class="blog-card">
-        <div class="blog-media"><svg viewBox="0 0 300 190"><rect width="300" height="190" fill="#F6F8FC"/><path d="M150 55 L190 75 V115 C190 140 172 155 150 162 C128 155 110 140 110 115 V75 Z" fill="rgba(11,61,145,0.12)" stroke="#0B3D91" stroke-width="2"/></svg></div>
+        <div class="blog-media">
+          <img src="/assets/blog-need-for-cybersecurity.jpg" alt="Need for Cybersecurity" width="300" height="190" loading="lazy">
+        </div>
         <div class="blog-body">
           <span class="blog-date">January 15, 2024</span>
           <h3>Need for Cybersecurity</h3>
@@ -744,7 +725,9 @@
       </article>
 
       <article class="blog-card">
-        <div class="blog-media"><svg viewBox="0 0 300 190"><rect width="300" height="190" fill="#EAF0FC"/><rect x="70" y="70" width="70" height="70" rx="8" fill="none" stroke="#2E6FF2" stroke-width="2"/><rect x="160" y="90" width="70" height="70" rx="8" fill="none" stroke="#00A99E" stroke-width="2"/></svg></div>
+        <div class="blog-media">
+          <img src="/assets/blog-ai-automation.jpg" alt="Artificial Intelligence and Automation" width="300" height="190" loading="lazy">
+        </div>
         <div class="blog-body">
           <span class="blog-date">January 15, 2024</span>
           <h3>Artificial Intelligence and Automation</h3>
@@ -755,79 +738,10 @@
         </div>
       </article>
     </div>
-  </div>
-</section>
-
-<!-- ==========================================================================
-     GET IN TOUCH: bottom contact form
-     ========================================================================== -->
-<section class="section-dark contact-cta section-pad" id="contact">
-  <div class="container">
-    <div class="contact-intro" data-reveal>
-      <p class="eyebrow">Get In Touch</p>
-      <h2>Let's Build Your Roadmap to Execution</h2>
-      <p class="lede">Tell us about your priorities and a DigiMicros advisor will follow up to scope the right engagement, no obligation.</p>
-
-      <div class="contact-points">
-        <div class="contact-point">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.5 21 3 13.5 3 4.4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1L6.6 10.8Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
-          <div><strong>Call Us</strong><span>1 (800) 647-3107</span></div>
-        </div>
-        <div class="contact-point">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-7-4.4-7-10.5A5 5 0 0 1 12 7a5 5 0 0 1 7 3.5C19 16.6 12 21 12 21Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="10.5" r="2" stroke="currentColor" stroke-width="1.6"/></svg>
-          <div><strong>Visit Us</strong><span>Dallas, Texas, United States</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="contact-form-card" data-reveal>
-      <form id="getInTouchForm" novalidate>
-        <div class="form-grid">
-          <div class="form-field">
-            <label for="gitName">Full name</label>
-            <input class="form-input" type="text" id="gitName" name="name" autocomplete="name" required>
-          </div>
-          <div class="form-field">
-            <label for="gitEmail">Email</label>
-            <input class="form-input" type="email" id="gitEmail" name="email" autocomplete="email" required>
-          </div>
-          <div class="form-field">
-            <label for="gitPhone">Phone number</label>
-            <input class="form-input" type="tel" id="gitPhone" name="phone" autocomplete="tel">
-          </div>
-          <div class="form-field">
-            <label for="gitService">Service needed</label>
-            <select class="form-select" id="gitService" name="service" required>
-              <option value="" selected disabled>Select a service</option>
-              <option>Digital Transformation - Infrastructure and Application Services</option>
-              <option>AI and Automation</option>
-              <option>Cybersecurity</option>
-              <option>Technology Innovation Enablement</option>
-              <option>Cloud and Data Center</option>
-              <option>Operational Resilience</option>
-              <option>Audit</option>
-              <option>Third Party Risk Management</option>
-            </select>
-          </div>
-          <div class="form-field full">
-            <label for="gitAvailability">Best time to reach you</label>
-            <input class="form-input" type="text" id="gitAvailability" name="availability" placeholder="e.g. Weekdays, 9am–5pm CT">
-          </div>
-          <div class="form-field full">
-            <label for="gitMessage">Message</label>
-            <textarea class="form-textarea" id="gitMessage" name="message" rows="4" placeholder="Tell us a bit about what you're looking to solve"></textarea>
-          </div>
-        </div>
-        <button type="submit" class="btn-primary">Send Message</button>
-        <p class="form-success" id="gitSuccess" role="status">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Thanks, we've received your message and will be in touch soon.
-        </p>
-        <p class="form-note">We're not putting on airs, our work is guaranteed to satisfy.</p>
-      </form>
     </div>
   </div>
 </section>
+
 </main>
 
 <!-- ==========================================================================
@@ -837,12 +751,7 @@
   <div class="container footer-top">
     <div class="footer-brand">
       <a href="/" class="brand" aria-label="DigiMicros home">
-        <svg class="brand-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-          <rect x="1" y="1" width="38" height="38" rx="10" stroke="#00D4C7" stroke-width="1.5"/>
-          <path d="M20 8 L30 13 V22 C30 28 26 31.5 20 33 C14 31.5 10 28 10 22 V13 Z" stroke="#2E6FF2" stroke-width="1.6" fill="rgba(46,111,242,0.12)"/>
-          <path d="M15.5 20.5 L18.5 23.5 L25 16.5" stroke="#00D4C7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <span>DigiMicros<small>Excellence Of Execution</small></span>
+        <img class="brand-logo" src="/assets/logo_image.png" alt="DigiMicros, Future-Proofing Businesses" width="677" height="368">
       </a>
       <p>We help companies achieve their business goals with insights and cost-effective technology solutions tailored to the changing needs of their customers, operations, and employees.</p>
       <div class="footer-contact">
@@ -917,6 +826,6 @@
   </div>
 </footer>
 
-<script src="/js/main.js" defer></script>
+<script src="/js/main.js?v=20260912002529" defer></script>
 </body>
 </html>

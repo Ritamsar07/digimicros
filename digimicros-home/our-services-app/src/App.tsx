@@ -12,6 +12,11 @@ import {
   ArrowRight,
   Phone,
   CheckCircle2,
+  ChevronDown,
+  Mail,
+  MapPin,
+  Menu,
+  X,
 } from 'lucide-react'
 import './index.css'
 
@@ -23,7 +28,7 @@ const SERVICES = [
     title: 'Digital Transformation',
     subtitle: 'Infrastructure and Application Services',
     description:
-      'Helping organizations transform products, services and operations to meet evolving market and customer expectations. We design modernization roadmaps that align technology investment with business outcomes.',
+      'Helping organizations transform products, services and operations to meet evolving market and customer expectations. We design modernization roadmaps that align technology investment with business outcomes, then stay through delivery so the roadmap actually gets executed, not just documented.',
     href: '/digital-transformation-infrastructure-and-application-services/',
     icon: RefreshCw,
     image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=640&h=640&fit=crop&q=70&auto=format',
@@ -36,13 +41,23 @@ const SERVICES = [
       'DevOps, CI/CD pipeline implementation',
       'Infrastructure as Code (IaC) and cloud-native adoption',
     ],
+    outcomes: [
+      'Faster release cycles and less time lost to legacy constraints',
+      'One modernization roadmap that leadership and delivery teams both work from',
+      'Infrastructure and applications that scale with demand instead of against it',
+    ],
+    approach: [
+      { step: 'Assess', detail: 'We map the current estate, dependencies and constraints before proposing anything.' },
+      { step: 'Design', detail: 'A phased roadmap sequenced by business value and risk, not by technology fashion.' },
+      { step: 'Deliver', detail: 'We stay through execution, adjusting the plan as reality meets the roadmap.' },
+    ],
   },
   {
     id: 'ai-automation',
     title: 'AI and Automation',
     subtitle: 'Intelligent Process Optimization',
     description:
-      'Future-proofing your organization by identifying the right AI solutions and intelligent automation. We help you move from experimentation to production-grade AI that delivers measurable ROI.',
+      'Future-proofing your organization by identifying the right AI solutions and intelligent automation. We help you move from experimentation to production-grade AI that delivers measurable ROI, with governance built in from day one rather than bolted on after the fact.',
     href: '/ai-and-automation/',
     icon: BrainCircuit,
     image: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=640&h=640&fit=crop&q=70&auto=format',
@@ -55,13 +70,23 @@ const SERVICES = [
       'MLOps pipelines and model governance frameworks',
       'Predictive analytics and intelligent decision support',
     ],
+    outcomes: [
+      'Repetitive, high-volume work handled without adding headcount',
+      'A shortlist of AI use cases ranked by value and feasibility, not hype',
+      'Governance that lets you adopt AI without inheriting unmanaged risk',
+    ],
+    approach: [
+      { step: 'Identify', detail: 'We find where AI and automation genuinely fit your processes and your data.' },
+      { step: 'Pilot', detail: 'Small, measurable pilots that prove value before you commit at scale.' },
+      { step: 'Scale', detail: 'Production rollout with monitoring, governance and clear ownership.' },
+    ],
   },
   {
     id: 'cybersecurity',
     title: 'Cybersecurity',
     subtitle: 'Cyber Secure and Resilient',
     description:
-      'A cyber secure and resilient approach, equipping clients with the right security solutions. From threat modeling and zero-trust architecture to incident response and compliance readiness.',
+      'A cyber secure and resilient approach, equipping clients with the right security solutions. From threat modeling and zero-trust architecture to incident response and compliance readiness, we combine strong governance with AI-powered monitoring so protection holds up under real conditions.',
     href: '/cyber-security/',
     icon: ShieldCheck,
     image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=640&h=640&fit=crop&q=70&auto=format',
@@ -74,13 +99,23 @@ const SERVICES = [
       'Regulatory compliance (NIST, ISO 27001, SOC 2, HIPAA)',
       'Incident response planning and tabletop exercises',
     ],
+    outcomes: [
+      'Faster detection and containment when something does get through',
+      'A security program leadership can evidence to auditors and boards',
+      'Controls that hold up in practice, not only on paper',
+    ],
+    approach: [
+      { step: 'Evaluate', detail: 'We baseline your current posture, controls and exposure.' },
+      { step: 'Harden', detail: 'Governance, zero trust architecture and detection capability put in place.' },
+      { step: 'Sustain', detail: 'Ongoing monitoring, testing and response readiness as threats evolve.' },
+    ],
   },
   {
     id: 'technology-innovation',
     title: 'Technology Innovation Enablement',
     subtitle: 'Staying Ahead of Trends',
     description:
-      'Building a supportive environment to develop and implement new technologies and stay ahead of trends. We help organizations build innovation labs, run technology pilots, and scale winning ideas.',
+      'Building a supportive environment to develop and implement new technologies and stay ahead of trends. We help organizations build innovation labs, run technology pilots, and scale winning ideas, while retiring the ones that do not pan out before they drain budget.',
     href: '/technology-innovation-enablement/',
     icon: Lightbulb,
     image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=640&h=640&fit=crop&q=70&auto=format',
@@ -93,13 +128,23 @@ const SERVICES = [
       'Technology scouting and vendor evaluation',
       'Innovation culture enablement and change management',
     ],
+    outcomes: [
+      'A repeatable path from idea to pilot to production',
+      'Clear criteria for retiring ideas early instead of funding them indefinitely',
+      'Teams that adopt new technology rather than resisting it',
+    ],
+    approach: [
+      { step: 'Scout', detail: 'We track emerging technology and filter it against your actual business needs.' },
+      { step: 'Prototype', detail: 'Rapid proof-of-concept work that tests assumptions cheaply.' },
+      { step: 'Embed', detail: 'Governance, enablement and change support so the winners stick.' },
+    ],
   },
   {
     id: 'cloud-data-center',
     title: 'Cloud and Data Center',
     subtitle: 'Hybrid and Multi-Cloud Environments',
     description:
-      'Preparing, planning, migrating and optimizing your data centers for hybrid or multi-cloud environments. We bring vendor-neutral expertise across AWS, Azure, and GCP to lower cost and increase resilience.',
+      'Preparing, planning, migrating and optimizing your data centers for hybrid or multi-cloud environments. We bring vendor-neutral expertise across major cloud platforms to lower cost and increase resilience, so the environment you end up with matches how the business actually runs.',
     href: '/cloud-and-data-center/',
     icon: Cloud,
     image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=640&h=640&fit=crop&q=70&auto=format',
@@ -112,13 +157,23 @@ const SERVICES = [
       'FinOps optimization and cloud cost governance',
       'Disaster recovery and high-availability design',
     ],
+    outcomes: [
+      'Cloud spend you can forecast instead of react to',
+      'Right-sized environments matched to real workload demand',
+      'A resilient footprint with recovery you have actually tested',
+    ],
+    approach: [
+      { step: 'Plan', detail: 'Readiness, cost modelling and target architecture before anything moves.' },
+      { step: 'Migrate', detail: 'Sequenced migration with rollback paths and minimal disruption.' },
+      { step: 'Optimize', detail: 'Continuous right-sizing, cost governance and resilience testing.' },
+    ],
   },
   {
     id: 'operational-resilience',
     title: 'Operational Resilience',
     subtitle: 'Business Continuity and Recovery',
     description:
-      'A proactive approach that helps organizations build plans to prevent operational disruptions. We design BCP/DR frameworks, run resilience exercises, and help you meet regulatory expectations.',
+      'A proactive approach that helps organizations build plans to prevent operational disruptions. We design BCP/DR frameworks, run resilience exercises, and help you meet regulatory expectations, then keep testing those plans as the business and threat landscape evolve.',
     href: '/operational-resilience/',
     icon: HeartPulse,
     image: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=640&h=640&fit=crop&q=70&auto=format',
@@ -131,13 +186,23 @@ const SERVICES = [
       'Crisis management and communication frameworks',
       'Resilience testing, simulation and maturity assessments',
     ],
+    outcomes: [
+      'Critical operations that keep running through disruption',
+      'Plans your teams have rehearsed, not just read',
+      'Evidence of resilience your regulators and clients will accept',
+    ],
+    approach: [
+      { step: 'Analyze', detail: 'Business impact analysis to identify what truly cannot stop.' },
+      { step: 'Design', detail: 'Continuity and recovery plans built around those critical services.' },
+      { step: 'Test', detail: 'Exercises and simulations that find the gaps before an incident does.' },
+    ],
   },
   {
     id: 'audit',
     title: 'Audit',
     subtitle: 'IT Audit and Assurance',
     description:
-      'Evaluating IT infrastructure, applications and cyber preparedness to ensure effective, secure and compliant controls. Our audit services span SOX, SOC 2, HIPAA, and custom frameworks.',
+      'Evaluating IT infrastructure, applications and cyber preparedness to ensure effective, secure and compliant controls. Our audit services span common regulatory and industry frameworks, and every finding comes with a practical remediation path, not just a list of gaps.',
     href: '/audit/',
     icon: ClipboardCheck,
     image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=640&h=640&fit=crop&q=70&auto=format',
@@ -150,13 +215,23 @@ const SERVICES = [
       'HIPAA security and privacy rule assessments',
       'Internal IT audit co-sourcing and quality assurance',
     ],
+    outcomes: [
+      'A clear, evidence-based view of where your controls actually stand',
+      'Findings paired with practical remediation, not just a gap list',
+      'Audit readiness that reduces surprises at assessment time',
+    ],
+    approach: [
+      { step: 'Scope', detail: 'We agree the frameworks, systems and risks in scope up front.' },
+      { step: 'Test', detail: 'Controls are evaluated against real evidence and real conditions.' },
+      { step: 'Report', detail: 'Findings, severity and a remediation path leadership can act on.' },
+    ],
   },
   {
     id: 'third-party-risk',
     title: 'Third Party Risk Management',
     subtitle: 'Vendor and Supply Chain Risk',
     description:
-      'A risk-first framework focused on identifying and reducing risks relating to the use of third parties. We build TPRM programs that scale — from onboarding due diligence to continuous monitoring.',
+      'A risk-first framework focused on identifying and reducing risks relating to the use of third parties. We build TPRM programs that scale, from onboarding due diligence to continuous monitoring, so risk gets caught before it becomes impact rather than after.',
     href: '/third-party-risk-management/',
     icon: Users,
     image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=640&h=640&fit=crop&q=70&auto=format',
@@ -168,6 +243,16 @@ const SERVICES = [
       'Risk scoring methodology and automated monitoring',
       'Fourth-party and supply chain risk assessment',
       'Regulatory alignment (DORA, OCC Guidance, ISO 27036)',
+    ],
+    outcomes: [
+      'Visibility into which third parties actually carry meaningful risk',
+      'A consistent, defensible process for onboarding and review',
+      'Issues surfaced while they are still manageable',
+    ],
+    approach: [
+      { step: 'Tier', detail: 'Vendors are assessed and tiered by access, criticality and exposure.' },
+      { step: 'Assess', detail: 'Due diligence proportionate to each tier, not one-size-fits-all.' },
+      { step: 'Monitor', detail: 'Ongoing monitoring and periodic review across the vendor lifecycle.' },
     ],
   },
 ]
@@ -181,8 +266,11 @@ const CAROUSEL_SLIDES = SERVICES.map((s) => ({
 // ─── Header ───────────────────────────────────────────────────────────────────
 
 function Header() {
+  const [navOpen, setNavOpen] = useState(false)
+
   return (
     <header
+      className={navOpen ? 'app-header nav-open' : 'app-header'}
       style={{
         position: 'fixed',
         top: 0, left: 0, right: 0,
@@ -190,53 +278,162 @@ function Header() {
         height: 'var(--header-h)',
         display: 'flex',
         alignItems: 'center',
-        background: 'rgba(6,11,24,0.9)',
-        backdropFilter: 'blur(16px)',
-        borderBottom: '1px solid rgba(255,255,255,0.08)',
+        background: '#060B18',
+        borderBottom: '1px solid rgba(255,255,255,0.1)',
       }}
     >
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1.5rem' }}>
-        <a href="/" aria-label="DigiMicros home" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.6rem', fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.3rem', color: '#fff', letterSpacing: '-0.01em', textDecoration: 'none' }}>
-          <svg style={{ width: 34, height: 34, flexShrink: 0 }} viewBox="0 0 40 40" fill="none" aria-hidden="true">
-            <rect x="1" y="1" width="38" height="38" rx="10" stroke="#00D4C7" strokeWidth="1.5" />
-            <path d="M20 8 L30 13 V22 C30 28 26 31.5 20 33 C14 31.5 10 28 10 22 V13 Z" stroke="#2E6FF2" strokeWidth="1.6" fill="rgba(46,111,242,0.12)" />
-            <path d="M15.5 20.5 L18.5 23.5 L25 16.5" stroke="#00D4C7" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          <span>
-            DigiMicros
-            <small style={{ display: 'block', fontFamily: 'var(--font-body)', fontWeight: 500, fontSize: '0.6rem', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#00D4C7', marginTop: 2 }}>Excellence Of Execution</small>
-          </span>
+        <a href="/" aria-label="DigiMicros home" style={{ display: 'inline-flex', alignItems: 'center', textDecoration: 'none' }}>
+          <img
+            src="/assets/logo_image.png"
+            alt="DigiMicros, Future-Proofing Businesses"
+            width={677}
+            height={368}
+            style={{ height: 52, width: 'auto', display: 'block', flexShrink: 0 }}
+          />
         </a>
 
-        <nav style={{ display: 'flex', alignItems: 'center', gap: '2.5rem' }} aria-label="Primary">
-          <ul style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', listStyle: 'none', margin: 0, padding: 0 }}>
+        <nav className="app-nav" aria-label="Primary">
+          <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
             <li><a href="/" style={{ fontSize: '0.875rem', fontWeight: 500, color: 'rgba(245,247,250,0.85)', textDecoration: 'none' }}>Home</a></li>
-            <li><a href="/our-services/" aria-current="page" style={{ fontSize: '0.875rem', fontWeight: 600, color: '#fff', textDecoration: 'none' }}>Services</a></li>
+            <li className="app-has-dropdown" style={{ position: 'relative' }}>
+              <a href="/our-services/" aria-current="page" aria-haspopup="true" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.875rem', fontWeight: 600, color: '#fff', textDecoration: 'none' }}>
+                Services
+                <ChevronDown style={{ width: 13, height: 13 }} />
+              </a>
+              <div className="app-dropdown" role="menu">
+                {SERVICES.map((s) => (
+                  <a key={s.id} role="menuitem" href={s.href}>{s.title}</a>
+                ))}
+              </div>
+            </li>
             <li><a href="/about-us/" style={{ fontSize: '0.875rem', fontWeight: 500, color: 'rgba(245,247,250,0.85)', textDecoration: 'none' }}>About Us</a></li>
             <li><a href="/contact-us/" style={{ fontSize: '0.875rem', fontWeight: 500, color: 'rgba(245,247,250,0.85)', textDecoration: 'none' }}>Contact Us</a></li>
           </ul>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-            <a href="tel:18006473107" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', fontWeight: 600, color: '#fff', textDecoration: 'none' }}>
+          <div className="app-nav-actions">
+            <a className="app-nav-phone" href="tel:18006473107">
               <Phone style={{ width: 16, height: 16, color: '#00D4C7' }} />
               1 (800) 647-3107
             </a>
-            <a
-              href="/contact-us/"
-              style={{
-                display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-                gap: '0.5rem', padding: '0.75rem 1.5rem',
-                borderRadius: 'var(--radius-pill)', fontWeight: 600, fontSize: '0.875rem',
-                background: 'linear-gradient(135deg,#2E6FF2,#0B3D91)',
-                color: '#fff', boxShadow: '0 10px 30px rgba(46,111,242,0.35)',
-                textDecoration: 'none', whiteSpace: 'nowrap',
-              }}
-            >
-              Request a Meeting
-            </a>
+            <a className="app-nav-cta" href="/contact-us/">Request a Meeting</a>
           </div>
         </nav>
+
+        <button
+          type="button"
+          className="app-nav-toggle"
+          aria-label={navOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={navOpen}
+          onClick={() => setNavOpen((v) => !v)}
+        >
+          {navOpen ? <X /> : <Menu />}
+        </button>
       </div>
+
+      <div
+        className="app-nav-scrim"
+        onClick={() => setNavOpen(false)}
+        aria-hidden="true"
+      />
     </header>
+  )
+}
+
+// ─── Footer (mirrors the static pages' full footer) ──────────────────────────
+
+const QUICK_LINKS = [
+  { label: 'Home', href: '/' },
+  { label: 'About Us', href: '/about-us/' },
+  { label: 'Services', href: '/our-services/' },
+  { label: 'Blog', href: '/blog/' },
+  { label: 'Contact Us', href: '/contact-us/' },
+]
+
+const SOCIALS = [
+  { label: 'DigiMicros on LinkedIn', href: 'https://www.linkedin.com/company/digimicros/', d: 'M6.94 8.5H4v11h2.94v-11ZM5.47 7.2A1.7 1.7 0 1 0 5.47 3.8a1.7 1.7 0 0 0 0 3.4ZM20 13.7c0-3-1.6-4.4-3.75-4.4-1.73 0-2.5 1-2.94 1.66V8.5H10.4c.04.85 0 11 0 11h2.9v-6.14c0-.33.02-.65.12-.89.26-.65.85-1.32 1.83-1.32 1.3 0 1.82.98 1.82 2.43V19.5H20V13.7Z' },
+  { label: 'DigiMicros on Facebook', href: 'https://www.facebook.com/profile.php?id=61581446564197', d: 'M15 8.5h2V5.6c-.35-.05-1.54-.15-2.93-.15-2.9 0-4.87 1.77-4.87 5.02V13H6.3v3.25h2.9V21h3.36v-4.75h2.78L15.8 13h-3.24v-2.2c0-.94.26-1.58 1.6-1.58Z' },
+  { label: 'DigiMicros on X (Twitter)', href: 'https://twitter.com/digimicros', d: 'M4 4l7.2 9.4L4.3 20H6l6-6.5 4 6.5h4l-7.5-9.7L19.5 4h-1.7l-5.5 6-3.7-6H4Z' },
+]
+
+function SiteFooter() {
+  const [callbackSent, setCallbackSent] = useState(false)
+
+  return (
+    <footer className="app-footer">
+      <div className="container app-footer-top">
+        <div className="app-footer-brand">
+          <a href="/" aria-label="DigiMicros home">
+            <img
+              src="/assets/logo_image.png"
+              alt="DigiMicros, Future-Proofing Businesses"
+              width={677}
+              height={368}
+              style={{ height: 60, width: 'auto', display: 'block' }}
+            />
+          </a>
+          <p>
+            We help companies achieve their business goals with insights and cost-effective technology
+            solutions tailored to the changing needs of their customers, operations, and employees.
+          </p>
+          <div className="app-footer-contact">
+            <a href="tel:18006473107"><Phone /> 1 (800) 647-3107</a>
+            <a href="/contact-us/"><Mail /> Email Us</a>
+            <a href="/contact-us/"><MapPin /> Dallas, Texas, United States</a>
+          </div>
+          <div className="app-footer-socials">
+            {SOCIALS.map((s) => (
+              <a key={s.label} href={s.href} aria-label={s.label} target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d={s.d} fill="currentColor" /></svg>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <div className="app-footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            {QUICK_LINKS.map((l) => (
+              <li key={l.href}><a href={l.href}>{l.label}</a></li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="app-footer-col">
+          <h4>Our Services</h4>
+          <ul>
+            {SERVICES.map((s) => (
+              <li key={s.id}><a href={s.href}>{s.title}</a></li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="app-footer-col">
+          <h4>Request a Call Back</h4>
+          <p className="app-footer-note">Leave your number, we'll call you.</p>
+          <form
+            className="app-callback-form"
+            onSubmit={(e) => {
+              e.preventDefault()
+              setCallbackSent(true)
+              e.currentTarget.reset()
+              window.setTimeout(() => setCallbackSent(false), 5000)
+            }}
+          >
+            <label htmlFor="appCallbackPhone" className="app-visually-hidden">Phone number</label>
+            <input id="appCallbackPhone" type="tel" name="phone" placeholder="Your phone number" required />
+            <button type="submit" aria-label="Request a call back">
+              <ArrowRight />
+            </button>
+          </form>
+          {callbackSent && <p className="app-callback-success">Got it, we'll call you soon.</p>}
+        </div>
+      </div>
+
+      <div className="container app-footer-bottom">
+        <p>© {new Date().getFullYear()} DigiMicros. Future-proofing Businesses. All Rights Reserved.</p>
+        <p>Dallas, Texas, United States · 1 (800) 647-3107</p>
+      </div>
+    </footer>
   )
 }
 
@@ -250,13 +447,7 @@ function ServiceGrid({
   onSelect: (i: number) => void
 }) {
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(4, 1fr)',
-        gap: '0.875rem',
-      }}
-    >
+    <div className="svc-grid">
       {SERVICES.map((s, i) => {
         const Icon = s.icon
         const isActive = i === activeIndex
@@ -368,11 +559,8 @@ function ServiceDetail({
     >
       {/* Top bar with icon + title */}
       <div
+        className="svc-detail-head"
         style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '1.25rem',
-          padding: '2rem 2.5rem 1.5rem',
           background: `linear-gradient(135deg, ${service.accent}08 0%, transparent 60%)`,
           borderBottom: '1px solid var(--color-border-light)',
         }}
@@ -421,15 +609,8 @@ function ServiceDetail({
       </div>
 
       {/* Body */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 280px',
-          gap: '2.5rem',
-          padding: '2rem 2.5rem 2.5rem',
-        }}
-      >
-        {/* Left — description + highlights + CTA */}
+      <div className="svc-detail-body">
+        {/* Left, description + highlights + CTA */}
         <div>
           <p
             style={{
@@ -481,6 +662,46 @@ function ServiceDetail({
               </li>
             ))}
           </ul>
+
+          {/* How we engage */}
+          <p
+            style={{
+              fontSize: '0.7rem',
+              fontWeight: 700,
+              letterSpacing: '0.12em',
+              textTransform: 'uppercase',
+              color: 'var(--color-text-soft)',
+              marginBottom: '0.875rem',
+            }}
+          >
+            How We Engage
+          </p>
+          <ol className="svc-approach" style={{ marginBottom: '2rem' }}>
+            {service.approach.map((a, i) => (
+              <li key={a.step}>
+                <span className="svc-approach-num" style={{ background: `${service.accent}15`, color: service.accent, borderColor: `${service.accent}40` }}>
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <div>
+                  <strong style={{ color: 'var(--color-text)' }}>{a.step}</strong>
+                  <p style={{ color: 'var(--color-text-muted)' }}>{a.detail}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+
+          {/* Business outcomes */}
+          <div className="svc-outcomes" style={{ borderColor: `${service.accent}30`, background: `${service.accent}08` }}>
+            <p style={{ color: service.accent }}>What You Get</p>
+            <ul>
+              {service.outcomes.map((o) => (
+                <li key={o}>
+                  <ArrowRight style={{ width: 15, height: 15, color: service.accent, flexShrink: 0, marginTop: '0.2rem' }} />
+                  {o}
+                </li>
+              ))}
+            </ul>
+          </div>
 
           {/* Tags */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '2rem' }}>
@@ -546,7 +767,7 @@ function ServiceDetail({
           </div>
         </div>
 
-        {/* Right — image */}
+        {/* Right, image */}
         <div
           style={{
             borderRadius: 'var(--radius-md)',
@@ -596,13 +817,10 @@ export default function App() {
   const detailRef = useRef<HTMLDivElement>(null)
   const activeService = SERVICES[activeIndex]
 
-  // Single handler used by both carousel and grid — updates state and scrolls detail into view
+  // Single handler used by both carousel and grid, just updates which service is shown.
+  // Deliberately does not scroll the page; the detail panel updates in place.
   const handleSelect = useCallback((i: number) => {
     setActiveIndex(i)
-    // Small delay so React has rendered the new detail panel before scrolling
-    setTimeout(() => {
-      detailRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }, 60)
   }, [])
 
   return (
@@ -660,19 +878,37 @@ export default function App() {
 
         {/* ── Carousel ─────────────────────────────────────────────── */}
         <section
-          style={{ background: 'var(--color-bg-alt)', paddingBlock: '3rem', borderBottom: '1px solid var(--color-border-light)' }}
+          style={{
+            position: 'relative',
+            background: 'var(--color-bg-dark)',
+            paddingBlock: '4rem',
+            overflow: 'hidden',
+          }}
           aria-label="Services carousel"
         >
-          <div className="container">
+          <div
+            aria-hidden="true"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background:
+                'radial-gradient(ellipse 55% 65% at 50% 40%, rgba(46,111,242,0.28), transparent 65%), ' +
+                'radial-gradient(ellipse 40% 50% at 85% 15%, rgba(0,212,199,0.22), transparent 60%)',
+              pointerEvents: 'none',
+            }}
+          />
+          <div className="container" style={{ position: 'relative' }}>
             <p
               style={{
                 textAlign: 'center',
                 fontSize: '0.8125rem',
-                color: 'var(--color-text-muted)',
-                marginBottom: '0.5rem',
+                fontWeight: 600,
+                letterSpacing: '0.04em',
+                color: 'var(--color-text-inverse-muted)',
+                marginBottom: '2rem',
               }}
             >
-              Drag or use arrow keys to browse — click a card or button below to view details
+              Drag or use arrow keys to browse, click a card or button below to view details
             </p>
             <CoverflowCarousel
               slides={CAROUSEL_SLIDES}
@@ -682,6 +918,7 @@ export default function App() {
               loop
               label="IT Services"
               onSelect={handleSelect}
+              cardClassName="cf-card-glow"
             />
           </div>
         </section>
@@ -755,12 +992,7 @@ export default function App() {
         </section>
       </main>
 
-      <footer style={{ background: 'var(--color-bg-dark)', color: 'var(--color-text-inverse)', padding: '2rem 0' }}>
-        <div className="container" style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', alignItems: 'center', textAlign: 'center', fontSize: '0.8125rem', color: 'var(--color-text-inverse-muted)' }}>
-          <p>© 2026 DigiMicros. Future-proofing Businesses. All Rights Reserved.</p>
-          <p>Dallas, Texas, United States · 1 (800) 647-3107</p>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   )
 }

@@ -62,7 +62,7 @@
   --font-display: "Space Grotesk", "General Sans", "Segoe UI", sans-serif;
   --font-body: "Inter", "Manrope", "Segoe UI", sans-serif;
 
-  --fs-hero: clamp(2.5rem, 5vw, 4.5rem);
+  --fs-hero: clamp(2rem, 6.8vw, 7rem);
   --fs-h2: clamp(1.75rem, 3vw, 2.75rem);
   --fs-h3: clamp(1.25rem, 2vw, 1.75rem);
   --fs-h4: clamp(1.1rem, 1.3vw, 1.3rem);
@@ -278,13 +278,16 @@ p { margin: 0; }
 .btn-primary:active { transform: translateY(0) scale(0.99); }
 
 .btn-ghost {
-  background: transparent;
-  border-color: rgba(255, 255, 255, 0.28);
-  color: var(--color-text-inverse);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-color: rgba(255, 255, 255, 0.6);
+  color: #fff;
 }
 .btn-ghost:hover {
   border-color: var(--color-accent);
   color: var(--color-accent);
+  background: rgba(0, 212, 199, 0.1);
   transform: translateY(-2px);
 }
 .section-light .btn-ghost, .section-alt .btn-ghost {
@@ -338,9 +341,10 @@ p { margin: 0; }
 }
 /* On light (non-hero) pages the header should never be transparent */
 .no-hero .site-header {
-  background: rgba(6, 11, 24, 0.9);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: #060B18;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .site-header .container {
@@ -360,9 +364,15 @@ p { margin: 0; }
   color: #fff;
   letter-spacing: -0.01em;
 }
-.brand-mark {
-  width: 34px; height: 34px;
+.brand-logo {
+  height: 52px;
+  width: auto;
   flex-shrink: 0;
+  display: block;
+}
+.footer-brand .brand-logo { height: 60px; }
+@media (max-width: 1023px) {
+  .brand-logo { height: 42px; }
 }
 .brand small {
   display: block;
@@ -415,17 +425,18 @@ p { margin: 0; }
 
 .dropdown {
   position: absolute;
+  z-index: 150;
   top: calc(100% + 14px);
   left: 50%;
   transform: translateX(-50%) translateY(8px);
-  min-width: 340px;
+  min-width: 320px;
   background: rgba(13, 21, 38, 0.98);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  padding: var(--space-3);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.15rem;
+  padding: var(--space-2);
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
   box-shadow: var(--shadow-dark-card);
   opacity: 0;
   visibility: hidden;
@@ -433,6 +444,16 @@ p { margin: 0; }
   transition: opacity var(--dur-fast) var(--ease-out),
               transform var(--dur-fast) var(--ease-out),
               visibility var(--dur-fast);
+}
+/* Invisible bridge across the gap between the nav link and the panel, without
+   it the pointer leaves :hover mid-travel and the menu closes before you arrive. */
+.dropdown::before {
+  content: "";
+  position: absolute;
+  top: -18px;
+  left: 0;
+  right: 0;
+  height: 18px;
 }
 .has-dropdown:hover .dropdown,
 .has-dropdown:focus-within .dropdown {
@@ -446,6 +467,7 @@ p { margin: 0; }
   padding: 0.6rem 0.75rem;
   border-radius: var(--radius-sm);
   font-size: 0.83rem;
+  white-space: nowrap;
   color: rgba(245, 247, 250, 0.82);
   transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
 }
@@ -526,6 +548,8 @@ p { margin: 0; }
     visibility: visible;
     pointer-events: none;
     max-height: 0;
+    min-width: 0;
+    width: 100%;
     overflow: hidden;
     display: block;
     padding: 0;
@@ -534,6 +558,8 @@ p { margin: 0; }
     box-shadow: none;
     transition: max-height var(--dur-med) var(--ease-out), padding var(--dur-med) var(--ease-out);
   }
+  .dropdown a { white-space: normal; }
+  .dropdown::before { display: none; }
   .has-dropdown.is-expanded .dropdown {
     max-height: 480px;
     pointer-events: auto;
@@ -666,14 +692,31 @@ p { margin: 0; }
   box-shadow: 0 0 0 3px rgba(46, 111, 242, 0.15);
 }
 
-.form-select {
+/* Custom arrow via wrapper, not on the <select> itself: a background-image
+   directly on a styled <select> can bleed into the native option popup on
+   Windows Chrome, rendering as a tiled/garbled pattern. Wrap selects that
+   need the branded arrow in <div class="select-wrap">. */
+.select-wrap {
+  position: relative;
+}
+.select-wrap .form-select {
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2300D4C7' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 1rem center;
+  -webkit-appearance: none;
   padding-right: 2.5rem;
 }
-.section-light .form-select, .section-alt .form-select {
+.select-wrap::after {
+  content: "";
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  width: 12px;
+  height: 8px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2300D4C7' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+}
+.section-light .select-wrap::after, .section-alt .select-wrap::after {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230B3D91' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 
@@ -771,10 +814,17 @@ p { margin: 0; }
   z-index: 10;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  max-width: 780px;
-  padding-top: calc(var(--header-h) + var(--space-3));
-  padding-bottom: var(--space-5);
+  align-items: center;
+  text-align: center;
+  max-width: 100%;
+  margin-inline: auto;
+  padding-top: calc(var(--header-h) + var(--space-4));
+  padding-bottom: var(--space-6);
+}
+.hero-copy { width: 100%; }
+/* Above tablet the headline is sized to fit, so lock it to exactly three lines */
+@media (min-width: 1024px) {
+  .hero-heading .line > span { white-space: nowrap; }
 }
 
 .pill-badge {
@@ -829,8 +879,9 @@ p { margin: 0; }
   transition: transform var(--dur-slow) var(--ease-out);
 }
 .hero-heading.is-revealed .line span { transform: translateY(0); }
-.hero-heading .line:nth-child(1) span { transition-delay: 60ms; }
-.hero-heading .line:nth-child(2) span { transition-delay: 200ms; }
+.hero-heading .line:nth-child(1) span { transition-delay: 0ms; }
+.hero-heading .line:nth-child(2) span { transition-delay: 80ms; }
+.hero-heading .line:nth-child(3) span { transition-delay: 160ms; }
 .hero-heading .accent-text {
   background: linear-gradient(105deg, #00D4C7 0%, #4facfe 50%, #2E6FF2 100%);
   -webkit-background-clip: text;
@@ -841,13 +892,14 @@ p { margin: 0; }
 
 .hero-sub {
   margin-top: var(--space-4);
-  max-width: 48ch;
+  max-width: 58ch;
+  margin-inline: auto;
   font-size: var(--fs-body-lg);
   line-height: 1.65;
   color: rgba(245, 247, 250, 0.85);
   opacity: 0;
   transform: translateY(14px);
-  transition: opacity var(--dur-slow) var(--ease-out) 420ms, transform var(--dur-slow) var(--ease-out) 420ms;
+  transition: opacity var(--dur-med) var(--ease-out) 220ms, transform var(--dur-med) var(--ease-out) 220ms;
 }
 .hero-heading.is-revealed ~ .hero-sub,
 .is-revealed .hero-sub { opacity: 1; transform: translateY(0); }
@@ -856,13 +908,27 @@ p { margin: 0; }
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   gap: var(--space-3);
+  width: 100%;
+  max-width: 480px;
   margin-top: var(--space-5);
+  margin-inline: auto;
   opacity: 0;
   transform: translateY(14px);
-  transition: opacity var(--dur-slow) var(--ease-out) 560ms, transform var(--dur-slow) var(--ease-out) 560ms;
+  transition: opacity var(--dur-med) var(--ease-out) 300ms, transform var(--dur-med) var(--ease-out) 300ms;
 }
 .is-revealed .hero-ctas { opacity: 1; transform: translateY(0); }
+.hero-ctas .btn-primary,
+.hero-ctas > a.btn-ghost {
+  flex: 1 1 0;
+  justify-content: center;
+  white-space: nowrap;
+}
+@media (max-width: 480px) {
+  .hero-ctas { flex-direction: column; }
+  .hero-ctas .btn-primary, .hero-ctas > a.btn-ghost { width: 100%; }
+}
 
 /* Play Reel Button */
 .btn-play-reel {
@@ -904,13 +970,15 @@ p { margin: 0; }
 /* Hero Stats Bar */
 .hero-stats {
   display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: var(--space-5);
   margin-top: var(--space-4);
   padding-top: var(--space-3);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   opacity: 0;
   transform: translateY(14px);
-  transition: opacity var(--dur-slow) var(--ease-out) 700ms, transform var(--dur-slow) var(--ease-out) 700ms;
+  transition: opacity var(--dur-med) var(--ease-out) 380ms, transform var(--dur-med) var(--ease-out) 380ms;
 }
 .is-revealed .hero-stats { opacity: 1; transform: translateY(0); }
 .hero-stat strong {
@@ -1224,90 +1292,6 @@ p { margin: 0; }
   50% { transform: translateY(-8px); }
 }
 
-/* Ambient Video Controls Bar */
-.hero-video-bar {
-  position: absolute;
-  bottom: 1.5rem;
-  right: 2.5rem;
-  z-index: 20;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.4rem 0.8rem;
-  border-radius: var(--radius-pill);
-  background: rgba(13, 21, 38, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-}
-.video-stream-selector {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-.stream-label {
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: var(--color-text-inverse-muted);
-  margin-right: 0.2rem;
-}
-.stream-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.3rem 0.65rem;
-  border-radius: var(--radius-pill);
-  border: 1px solid transparent;
-  background: transparent;
-  color: rgba(245, 247, 250, 0.75);
-  font-size: 0.72rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all var(--dur-fast) var(--ease-out);
-}
-.stream-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
-}
-.stream-btn.is-active {
-  background: rgba(0, 212, 199, 0.15);
-  border-color: rgba(0, 212, 199, 0.4);
-  color: var(--color-accent);
-}
-.stream-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: currentColor;
-}
-.video-action-btns {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding-left: 0.5rem;
-  border-left: 1px solid rgba(255, 255, 255, 0.1);
-}
-.video-btn {
-  width: 28px; height: 28px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: rgba(255, 255, 255, 0.85);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all var(--dur-fast) var(--ease-out);
-}
-.video-btn:hover {
-  background: rgba(0, 212, 199, 0.2);
-  color: var(--color-accent);
-  border-color: var(--color-accent);
-}
-.video-btn svg { width: 14px; height: 14px; }
-.audio-waves { display: none; }
-
 /* Scroll cue indicator */
 .hero-scroll-cue {
   position: absolute;
@@ -1409,21 +1393,20 @@ p { margin: 0; }
   .hero-layout { grid-template-columns: 1fr; gap: var(--space-5); }
   .hero-visual { max-width: 520px; margin-inline: auto; }
   .hero-stats { flex-wrap: wrap; row-gap: var(--space-3); }
-  .hero-video-bar { right: 50%; transform: translateX(50%); bottom: 4.5rem; }
   .hero-scroll-cue { display: none; }
 }
 
 @media (max-width: 640px) {
   .hero-float-card { display: none; }
   .modal-video-footer { flex-direction: column; align-items: stretch; }
-  .hero-video-bar { width: calc(100% - 2rem); justify-content: space-between; }
-  .video-stream-selector { flex-wrap: wrap; }
 }
 
 /* -------------------------------------------------------------------------
    9b. Trust strip (advisory coverage, under hero)
    ------------------------------------------------------------------------- */
 .trust-strip {
+  position: relative;
+  background: linear-gradient(180deg, var(--color-bg-alt) 0%, #EEF2FA 100%);
   border-bottom: 1px solid var(--color-border-light);
   padding-block: var(--space-4);
 }
@@ -1511,6 +1494,14 @@ p { margin: 0; }
   border: 1px solid var(--color-border-light);
 }
 .media-blob svg { width: 100%; height: 100%; }
+.media-blob img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
 .media-blob::before {
   content: "";
   position: absolute;
@@ -1668,12 +1659,11 @@ p { margin: 0; }
    ------------------------------------------------------------------------- */
 .services-bento {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-auto-rows: minmax(200px, auto);
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 1fr;
   gap: var(--space-3);
 }
 .service-card {
-  grid-column: span 3;
   position: relative;
   padding: var(--space-4);
   border-radius: var(--radius-md);
@@ -1683,6 +1673,7 @@ p { margin: 0; }
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-height: 240px;
   overflow: hidden;
   transition: transform var(--dur-med) var(--ease-out),
               box-shadow var(--dur-med) var(--ease-out),
@@ -1708,16 +1699,6 @@ p { margin: 0; }
   border-color: transparent;
 }
 .service-card:hover::before, .service-card:focus-within::before { opacity: 1; }
-
-/* bento sizing: first + fourth cards feature larger */
-.service-card:nth-child(1) { grid-column: span 4; }
-.service-card:nth-child(2) { grid-column: span 2; }
-.service-card:nth-child(3) { grid-column: span 2; }
-.service-card:nth-child(4) { grid-column: span 2; }
-.service-card:nth-child(5) { grid-column: span 2; }
-.service-card:nth-child(6) { grid-column: span 3; }
-.service-card:nth-child(7) { grid-column: span 3; }
-.service-card:nth-child(8) { grid-column: span 4; }
 
 .service-icon {
   width: 48px; height: 48px;
@@ -1757,17 +1738,10 @@ p { margin: 0; }
 
 @media (max-width: 1023px) {
   .services-bento { grid-template-columns: repeat(2, 1fr); }
-  .service-card,
-  .service-card:nth-child(1), .service-card:nth-child(2), .service-card:nth-child(3),
-  .service-card:nth-child(4), .service-card:nth-child(5), .service-card:nth-child(6),
-  .service-card:nth-child(7), .service-card:nth-child(8) {
-    grid-column: span 1;
-  }
-  .service-card:nth-child(1), .service-card:nth-child(8) { grid-column: span 2; }
 }
 @media (max-width: 560px) {
   .services-bento { grid-template-columns: 1fr; }
-  .service-card, .service-card:nth-child(1), .service-card:nth-child(8) { grid-column: span 1; }
+  .service-card { min-height: 0; }
 }
 
 /* -------------------------------------------------------------------------
@@ -1876,8 +1850,16 @@ p { margin: 0; }
   width: 100%; height: 100%;
   transition: transform var(--dur-slow) var(--ease-out);
 }
+.case-study-media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
 .case-study-card:hover .case-study-media svg,
-.case-study-card:focus-within .case-study-media svg { transform: scale(1.08); }
+.case-study-card:focus-within .case-study-media svg,
+.case-study-card:hover .case-study-media img,
+.case-study-card:focus-within .case-study-media img { transform: scale(1.08); }
 
 .case-study-body { padding: var(--space-4); }
 .case-study-body .badge { margin-bottom: var(--space-2); }
@@ -1929,7 +1911,14 @@ p { margin: 0; }
   background: linear-gradient(135deg, #EAF0FC, var(--color-bg-alt));
 }
 .blog-media svg { width: 100%; height: 100%; transition: transform var(--dur-slow) var(--ease-out); }
-.blog-card:hover .blog-media svg, .blog-card:focus-within .blog-media svg { transform: scale(1.08); }
+.blog-media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+.blog-card:hover .blog-media svg, .blog-card:focus-within .blog-media svg,
+.blog-card:hover .blog-media img, .blog-card:focus-within .blog-media img { transform: scale(1.08); }
 
 .blog-body { padding: var(--space-4); display: flex; flex-direction: column; gap: 0.6rem; flex-grow: 1; }
 .blog-date { font-size: var(--fs-xs); color: var(--color-text-soft); font-weight: 600; letter-spacing: 0.02em; }
@@ -2088,13 +2077,44 @@ p { margin: 0; }
   .contact-cta .container { grid-template-columns: 1fr; }
 }
 
+.contact-cta .contact-cta-solo {
+  display: block;
+  max-width: 640px;
+  margin-inline: auto;
+  text-align: center;
+}
+.contact-cta-solo .lede { margin-top: var(--space-3); margin-inline: auto; }
+.contact-points-inline {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-5);
+}
+.contact-points-inline .contact-point { align-items: center; }
+
+/* Button row for CTA sections. Deliberately NOT .hero-ctas, which starts at
+   opacity 0 and only reveals via the hero's .is-revealed class. */
+.cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+@media (max-width: 480px) {
+  .cta-actions { flex-direction: column; align-items: stretch; }
+  .cta-actions .btn-primary, .cta-actions .btn-ghost { width: 100%; }
+}
+
 /* -------------------------------------------------------------------------
    20. Footer
    ------------------------------------------------------------------------- */
 .site-footer {
   background: #050912;
   color: var(--color-text-inverse-muted);
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(0, 212, 199, 0.08);
 }
 .footer-top {
   padding-block: var(--space-7);
@@ -2228,9 +2248,29 @@ p { margin: 0; }
     radial-gradient(ellipse 55% 60% at 100% 100%, rgba(0, 212, 199, 0.2), transparent 55%);
   pointer-events: none;
 }
+.page-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 90% at 30% 0%, #000 20%, transparent 75%);
+  mask-image: radial-gradient(ellipse 80% 90% at 30% 0%, #000 20%, transparent 75%);
+  pointer-events: none;
+}
 .page-hero .container { position: relative; }
-.page-hero h1 { max-width: 820px; }
-.page-hero .lede { margin-top: var(--space-3); max-width: 60ch; }
+.page-hero h1, .page-hero h2, .page-hero h3 { max-width: 820px; color: var(--color-text-inverse); }
+.page-hero .lede { margin-top: var(--space-3); max-width: 60ch; color: var(--color-text-inverse-muted); }
+.page-hero .eyebrow { color: var(--color-accent); }
+/* Light cards can sit inside the dark page hero: keep their own dark-on-white text */
+.page-hero .contact-info-card h3,
+.page-hero .solution-card h3,
+.page-hero .service-card h3 { color: var(--color-text); }
+.page-hero .contact-info-card p,
+.page-hero .solution-card p,
+.page-hero .service-card p { color: var(--color-text-muted); }
 
 .breadcrumb {
   display: flex;
@@ -2295,10 +2335,10 @@ p { margin: 0; }
   gap: var(--space-5);
   margin-top: var(--space-5);
   padding-top: var(--space-4);
-  border-top: 1px solid var(--color-border-light);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
 }
-.about-stat-row .hero-stat strong { color: var(--color-text); }
-.about-stat-row .hero-stat span { color: var(--color-text-muted); }
+.about-stat-row .hero-stat strong { color: #fff; }
+.about-stat-row .hero-stat span { color: var(--color-text-inverse-muted); }
 
 /* Contact page: info cards */
 .contact-cards {
@@ -2389,4 +2429,238 @@ p { margin: 0; }
 
 @media (max-width: 768px) {
   .case-summary-grid { grid-template-columns: 1fr; }
+}
+
+/* -------------------------------------------------------------------------
+   24. Mobile pass
+   ------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  /* Editorial hero type has to come down hard on small screens */
+  :root { --fs-hero: clamp(1.6rem, 7.6vw, 2.4rem); }
+
+  .hero-layout { padding-top: calc(var(--header-h) + var(--space-4)); }
+  .hero-stats { gap: var(--space-4); }
+  .hero-stat strong { font-size: 1.3rem; }
+
+  .page-hero { padding-top: calc(var(--header-h) + var(--space-5)); }
+
+  /* Cards and rails */
+  .case-scroll { grid-auto-columns: minmax(260px, 85%); }
+  .contact-points-inline { gap: var(--space-4); }
+  .about-stat-row { gap: var(--space-4); }
+
+  /* Section rhythm tightens up */
+  .section-pad { padding-block: var(--space-5); }
+}
+
+@media (max-width: 420px) {
+  .trust-pill { font-size: 0.72rem; padding: 0.4rem 0.7rem; }
+  .brand-logo { height: 36px; }
+  .modal { padding: var(--space-4); }
+  .digishield-panel { padding: var(--space-4); }
+}
+
+/* Nothing should ever scroll the page sideways */
+html, body { max-width: 100%; overflow-x: hidden; }
+
+/* -------------------------------------------------------------------------
+   25. Full-bleed header + footer
+   The page content stays in the 1240px container, but the header bar and the
+   footer stretch edge to edge so the logo and CTA sit near the screen edges.
+   ------------------------------------------------------------------------- */
+.site-header > .container,
+.site-footer > .container {
+  max-width: none;
+  padding-inline: var(--space-5);
+}
+
+@media (max-width: 1023px) {
+  .site-header > .container,
+  .site-footer > .container {
+    padding-inline: var(--space-4);
+  }
+}
+
+/* -------------------------------------------------------------------------
+   26. Separation between consecutive dark sections
+   Several pages stack .section-dark blocks back to back (why-us, support band,
+   CTA, testimonials). With identical backgrounds they read as one dark mass,
+   so alternate the tone and add a hairline seam.
+   ------------------------------------------------------------------------- */
+.section-dark + .section-dark,
+.section-dark + .cta-band,
+.cta-band + .section-dark {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Lift the support band off the near-black so it reads as its own band */
+.support-band {
+  background: #0A1122;
+}
+.support-band .support-item {
+  background: linear-gradient(160deg, rgba(13, 21, 38, 0.95), rgba(10, 17, 34, 0.6));
+}
+
+/* -------------------------------------------------------------------------
+   27. Horizontal rail navigation (case studies)
+   Arrows sit over the left and right edges of the rail itself.
+   ------------------------------------------------------------------------- */
+.rail-wrap {
+  position: relative;
+}
+.rail-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border-light);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: var(--color-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(11, 61, 145, 0.16);
+  transition: border-color var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out),
+              background var(--dur-fast) var(--ease-out);
+}
+.rail-btn-prev { left: 0.75rem; }
+.rail-btn-next { right: 0.75rem; }
+.rail-btn svg { width: 20px; height: 20px; }
+.rail-btn:hover {
+  border-color: var(--color-primary);
+  background: #fff;
+  transform: translateY(-50%) scale(1.06);
+}
+.rail-btn:active { transform: translateY(-50%) scale(0.97); }
+
+/* Hide the native scrollbar on the rail, the arrows drive it */
+.case-scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.case-scroll::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+@media (max-width: 560px) {
+  .rail-btn { width: 38px; height: 38px; }
+  .rail-btn svg { width: 17px; height: 17px; }
+  .rail-btn-prev { left: 0.35rem; }
+  .rail-btn-next { right: 0.35rem; }
+}
+
+/* -------------------------------------------------------------------------
+   28. Insights rail (home page blog cards as a horizontal auto-scroll rail)
+   Mirrors .case-scroll so both rails share the arrow + auto-advance script.
+   ------------------------------------------------------------------------- */
+.blog-rail {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(300px, 1fr);
+  gap: var(--space-4);
+  overflow-x: auto;
+  padding-bottom: var(--space-2);
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.blog-rail::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+.blog-rail .blog-card {
+  scroll-snap-align: start;
+  height: 100%;
+}
+
+@media (max-width: 640px) {
+  .blog-rail { grid-auto-columns: minmax(260px, 85%); }
+}
+
+/* -------------------------------------------------------------------------
+   29. Section headers with a trailing action (e.g. "View All Insights")
+   Was an inline flex style, which could not respond to breakpoints.
+   ------------------------------------------------------------------------- */
+.section-head-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4);
+  max-width: none;
+}
+@media (max-width: 640px) {
+  .section-head-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+  .section-head-row .btn-ghost { width: 100%; }
+}
+
+/* -------------------------------------------------------------------------
+   30. Footer structure
+   Logo + contacts come first, then the link lists sit side by side in two
+   columns, with the call-back form full width underneath.
+   ------------------------------------------------------------------------- */
+@media (max-width: 1023px) {
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5);
+  }
+  /* Brand block (logo, blurb, contacts, socials) spans the full width first */
+  .footer-brand { grid-column: 1 / -1; }
+  /* Quick Links + Our Services become the two columns */
+  /* Request a Call Back drops full width beneath them */
+  .footer-col:last-child { grid-column: 1 / -1; }
+}
+
+@media (max-width: 640px) {
+  .footer-top {
+    /* Keep the two link columns side by side instead of collapsing to one */
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5);
+    padding-block: var(--space-6);
+  }
+  .footer-brand p { max-width: none; }
+  .footer-col ul { gap: 0.55rem; }
+  .footer-col a { font-size: 0.82rem; }
+}
+
+/* -------------------------------------------------------------------------
+   31. Mobile refinements
+   ------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  /* Give tap targets room without blowing up the layout */
+  .nav-link { padding-block: var(--space-3); }
+  .footer-contact a, .dropdown a { padding-block: 0.5rem; }
+
+  /* Stat rows read better stacked in two columns than in a cramped single row */
+  .hero-stats { gap: var(--space-3) var(--space-5); }
+
+  /* Testimonials and quotes */
+  .testimonial-card { padding: var(--space-4); }
+
+  /* Article templates */
+  .article-meta { gap: var(--space-2); }
+  .article-illustrative { padding: var(--space-3); }
+
+  /* Modal should use the full screen on a phone */
+  .modal-overlay { padding: var(--space-3); }
+  .modal { max-height: 92vh; }
+}
+
+@media (max-width: 420px) {
+  .hero-ctas { gap: var(--space-2); }
+  .trust-strip-label { letter-spacing: 0.08em; }
+  .section-head-row .btn-ghost { font-size: 0.8rem; }
 }
