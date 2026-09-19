@@ -14,7 +14,6 @@ import {
   CheckCircle2,
   ChevronDown,
   Mail,
-  MapPin,
   Menu,
   X,
 } from 'lucide-react'
@@ -341,6 +340,9 @@ function Header() {
 
 // ─── Footer (mirrors the static pages' full footer) ──────────────────────────
 
+// FormSubmit relays each submission by email to the DigiMicros inbox
+const FORM_ENDPOINT = 'https://formsubmit.co/ajax/digimicros25@gmail.com'
+
 const QUICK_LINKS = [
   { label: 'Home', href: '/' },
   { label: 'About Us', href: '/about-us/' },
@@ -356,7 +358,7 @@ const SOCIALS = [
 ]
 
 function SiteFooter() {
-  const [callbackSent, setCallbackSent] = useState(false)
+  const [callbackState, setCallbackState] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
 
   return (
     <footer className="app-footer">
@@ -378,7 +380,6 @@ function SiteFooter() {
           <div className="app-footer-contact">
             <a href="tel:18006473107"><Phone /> 1 (800) 647-3107</a>
             <a href="/contact-us/"><Mail /> Email Us</a>
-            <a href="/contact-us/"><MapPin /> Dallas, Texas, United States</a>
           </div>
           <div className="app-footer-socials">
             {SOCIALS.map((s) => (
@@ -414,24 +415,42 @@ function SiteFooter() {
             className="app-callback-form"
             onSubmit={(e) => {
               e.preventDefault()
-              setCallbackSent(true)
-              e.currentTarget.reset()
-              window.setTimeout(() => setCallbackSent(false), 5000)
+              const form = e.currentTarget
+              const data = new FormData(form)
+              data.append('_subject', 'DigiMicros website: Call-back request')
+              data.append('_template', 'table')
+              data.append('_captcha', 'false')
+              data.append('Submitted from', window.location.href)
+              setCallbackState('sending')
+              fetch(FORM_ENDPOINT, { method: 'POST', headers: { Accept: 'application/json' }, body: data })
+                .then((res) => res.json().then((json) => ({ ok: res.ok, json })))
+                .then(({ ok, json }) => {
+                  if (!ok || String(json.success) !== 'true') throw new Error('send failed')
+                  form.reset()
+                  setCallbackState('sent')
+                  window.setTimeout(() => setCallbackState('idle'), 5000)
+                })
+                .catch(() => setCallbackState('error'))
             }}
           >
             <label htmlFor="appCallbackPhone" className="app-visually-hidden">Phone number</label>
             <input id="appCallbackPhone" type="tel" name="phone" placeholder="Your phone number" required />
-            <button type="submit" aria-label="Request a call back">
+            <input type="text" name="_honey" tabIndex={-1} autoComplete="off" aria-hidden="true"
+              style={{ position: 'absolute', left: -9999, width: 1, height: 1, opacity: 0 }} />
+            <button type="submit" aria-label="Request a call back" disabled={callbackState === 'sending'}>
               <ArrowRight />
             </button>
           </form>
-          {callbackSent && <p className="app-callback-success">Got it, we'll call you soon.</p>}
+          {callbackState === 'sent' && <p className="app-callback-success" role="status">Got it, we'll call you soon.</p>}
+          {callbackState === 'error' && (
+            <p className="app-callback-error" role="alert">That didn't go through. Please call 1 (800) 647-3107.</p>
+          )}
         </div>
       </div>
 
       <div className="container app-footer-bottom">
         <p>© {new Date().getFullYear()} DigiMicros. Future-proofing Businesses. All Rights Reserved.</p>
-        <p>Dallas, Texas, United States · 1 (800) 647-3107</p>
+        <p>1 (800) 647-3107</p>
       </div>
     </footer>
   )

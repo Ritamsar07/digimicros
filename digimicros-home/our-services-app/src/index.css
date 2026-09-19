@@ -494,8 +494,8 @@ ul { list-style: none; }
   transition: background 180ms var(--ease-out), color 180ms var(--ease-out);
 }
 .app-dropdown a:hover, .app-dropdown a:focus-visible {
-  background: rgba(0, 212, 199, 0.1);
-  color: var(--color-accent);
+  background: #2E6FF2;
+  color: #fff;
 }
 
 /* ---- Coverflow carousel card glow (used on the dark services carousel) ---- */
@@ -519,3 +519,11 @@ ul { list-style: none; }
   overflow: hidden;
   text-align: center;
 }
+
+.app-callback-error {
+  margin-top: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #FF8A8E;
+}
+.app-callback-form button:disabled { opacity: 0.65; cursor: progress; }

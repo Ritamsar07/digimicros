@@ -471,10 +471,15 @@ p { margin: 0; }
   color: rgba(245, 247, 250, 0.82);
   transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
 }
-.dropdown a:hover, .dropdown a:focus-visible {
-  background: rgba(0, 212, 199, 0.1);
-  color: var(--color-accent);
+/* Current page and hovered item are both lit, so on a service page you can see
+   where you are and where you're pointing at the same time. */
+.dropdown a:hover,
+.dropdown a:focus-visible,
+.dropdown a[aria-current="page"] {
+  background: var(--color-primary-light);
+  color: #fff;
 }
+.dropdown a[aria-current="page"] { font-weight: 600; }
 
 .header-actions {
   display: flex;
@@ -2664,3 +2669,150 @@ html, body { max-width: 100%; overflow-x: hidden; }
   .trust-strip-label { letter-spacing: 0.08em; }
   .section-head-row .btn-ghost { font-size: 0.8rem; }
 }
+
+/* -------------------------------------------------------------------------
+   32. Native <option> colours
+   The select inside the dark modal has near-white text, which <option>
+   inherits. The OS renders the dropdown popup on a white background, so the
+   options were white-on-white and only readable once highlighted.
+   ------------------------------------------------------------------------- */
+.form-select option,
+.form-select optgroup {
+  color: #101828;
+  background-color: #ffffff;
+}
+
+/* -------------------------------------------------------------------------
+   33. Our Services: hover to reveal (restores the old site's behaviour)
+   At rest each card shows its icon and name. On hover or keyboard focus the
+   card fills with brand blue and the icon gives way to the description.
+   ------------------------------------------------------------------------- */
+.services-bento .service-card {
+  min-height: 260px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: transform var(--dur-med) var(--ease-out),
+              box-shadow var(--dur-med) var(--ease-out),
+              background var(--dur-med) var(--ease-out),
+              border-color var(--dur-med) var(--ease-out);
+}
+.services-bento .service-card > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.services-bento .service-card .service-icon {
+  height: 48px;
+  margin-bottom: var(--space-3);
+  opacity: 1;
+  overflow: hidden;
+  transition: height var(--dur-med) var(--ease-out),
+              margin var(--dur-med) var(--ease-out),
+              opacity var(--dur-fast) var(--ease-out);
+}
+.services-bento .service-card h3 {
+  margin-bottom: 0;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.services-bento .service-card p,
+.services-bento .service-card .learn-more {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  margin-top: 0;
+  transition: max-height var(--dur-med) var(--ease-out),
+              opacity var(--dur-med) var(--ease-out),
+              margin var(--dur-med) var(--ease-out),
+              color var(--dur-fast) var(--ease-out);
+}
+
+/* Revealed state */
+.services-bento .service-card:hover,
+.services-bento .service-card:focus-within {
+  background: linear-gradient(145deg, var(--color-primary-light), var(--color-primary));
+  border-color: transparent;
+}
+.services-bento .service-card:hover .service-icon,
+.services-bento .service-card:focus-within .service-icon {
+  height: 0;
+  margin-bottom: 0;
+  opacity: 0;
+}
+.services-bento .service-card:hover h3,
+.services-bento .service-card:focus-within h3 { color: #fff; }
+.services-bento .service-card:hover p,
+.services-bento .service-card:focus-within p {
+  max-height: 10rem;
+  opacity: 1;
+  margin-top: var(--space-2);
+  color: rgba(255, 255, 255, 0.9);
+}
+.services-bento .service-card:hover .learn-more,
+.services-bento .service-card:focus-within .learn-more {
+  max-height: 3rem;
+  opacity: 1;
+  margin-top: var(--space-3);
+  color: #fff;
+}
+
+/* Touch screens have no hover, so show everything rather than hide it */
+@media (hover: none) {
+  .services-bento .service-card p,
+  .services-bento .service-card .learn-more {
+    max-height: none;
+    opacity: 1;
+  }
+  .services-bento .service-card p { margin-top: var(--space-2); }
+  .services-bento .service-card .learn-more { margin-top: var(--space-3); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .services-bento .service-card,
+  .services-bento .service-card * { transition: none !important; }
+}
+
+/* -------------------------------------------------------------------------
+   34. Home hero: let the client's footage actually show
+   The video was at 55% opacity under a navy overlay reaching 88-100% at the
+   edges plus a scanline texture, so the moving footage was barely visible.
+   Now: full-opacity video, an even darkening just strong enough for white
+   headline text, and a fade at the bottom into the next section.
+   ------------------------------------------------------------------------- */
+.hero .hero-video {
+  opacity: 1;
+  filter: none;
+}
+.hero .hero-video-overlay {
+  background:
+    linear-gradient(180deg,
+      rgba(6, 11, 24, 0.55) 0%,
+      rgba(6, 11, 24, 0.45) 45%,
+      rgba(6, 11, 24, 0.6) 80%,
+      #060B18 100%);
+}
+.hero .hero-scanlines { display: none; }
+
+/* Keep the headline crisp against a brighter, moving background */
+.hero .hero-heading,
+.hero .hero-sub {
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
+}
+
+/* -------------------------------------------------------------------------
+   35. Form send failure message
+   ------------------------------------------------------------------------- */
+.form-error {
+  display: none;
+  margin-top: var(--space-2);
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  background: rgba(229, 72, 77, 0.12);
+  border: 1px solid rgba(229, 72, 77, 0.45);
+  color: #FF8A8E;
+  font-size: var(--fs-small);
+  font-weight: 600;
+}
+.form-error.is-visible { display: block; }
+.section-light .form-error, .section-alt .form-error { color: #B42318; }
+button[type="submit"]:disabled { opacity: 0.65; cursor: progress; }

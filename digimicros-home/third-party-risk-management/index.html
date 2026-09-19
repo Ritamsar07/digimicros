@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/style.css?v=20260912002529">
+<link rel="stylesheet" href="/css/style.css?v=20260919132911">
 </head>
 <body class="no-hero">
 <a class="skip-link" href="#main">Skip to main content</a>
@@ -56,7 +56,7 @@
             <a role="menuitem" href="/cloud-and-data-center/">Cloud and Data Center</a>
             <a role="menuitem" href="/operational-resilience/">Operational Resilience</a>
             <a role="menuitem" href="/audit/">Audit</a>
-            <a role="menuitem" href="/third-party-risk-management/">Third Party Risk Management</a>
+            <a role="menuitem" href="/third-party-risk-management/" aria-current="page">Third Party Risk Management</a>
           </div>
         </li>
         <li><a class="nav-link" href="/about-us/">About Us</a></li>
@@ -119,6 +119,27 @@
         <div class="form-field">
           <label for="mtgTime">Preferred time</label>
           <input class="form-input" type="time" id="mtgTime" name="time">
+        </div>
+        <div class="form-field full">
+          <label for="mtgTimezone">Time zone</label>
+          <div class="select-wrap">
+            <select class="form-select" id="mtgTimezone" name="timezone">
+              <option value="America/New_York">Eastern Time (ET), UTC-05:00</option>
+              <option value="America/Chicago" selected>Central Time (CT), UTC-06:00</option>
+              <option value="America/Denver">Mountain Time (MT), UTC-07:00</option>
+              <option value="America/Los_Angeles">Pacific Time (PT), UTC-08:00</option>
+              <option value="America/Anchorage">Alaska Time (AKT), UTC-09:00</option>
+              <option value="Pacific/Honolulu">Hawaii Time (HST), UTC-10:00</option>
+              <option value="UTC">UTC</option>
+              <option value="Europe/London">London (GMT/BST), UTC+00:00</option>
+              <option value="Europe/Berlin">Central European Time (CET), UTC+01:00</option>
+              <option value="Asia/Dubai">Gulf Standard Time (GST), UTC+04:00</option>
+              <option value="Asia/Kolkata">India Standard Time (IST), UTC+05:30</option>
+              <option value="Asia/Singapore">Singapore Time (SGT), UTC+08:00</option>
+              <option value="Asia/Tokyo">Japan Standard Time (JST), UTC+09:00</option>
+              <option value="Australia/Sydney">Australian Eastern Time (AET), UTC+10:00</option>
+            </select>
+          </div>
         </div>
         <div class="form-field">
           <label for="mtgName">Full name</label>
@@ -349,10 +370,6 @@
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Email Us
         </a>
-        <a href="/contact-us/">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-7-4.4-7-10.5A5 5 0 0 1 12 7a5 5 0 0 1 7 3.5C19 16.6 12 21 12 21Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
-          Dallas, Texas, United States
-        </a>
       </div>
       <div class="footer-socials">
         <a href="https://www.linkedin.com/company/digimicros/" aria-label="DigiMicros on LinkedIn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6.94 8.5H4v11h2.94v-11ZM5.47 7.2A1.7 1.7 0 1 0 5.47 3.8a1.7 1.7 0 0 0 0 3.4ZM20 13.7c0-3-1.6-4.4-3.75-4.4-1.73 0-2.5 1-2.94 1.66V8.5H10.4c.04.85 0 11 0 11h2.9v-6.14c0-.33.02-.65.12-.89.26-.65.85-1.32 1.83-1.32 1.3 0 1.82.98 1.82 2.43V19.5H20V13.7Z" fill="currentColor"/></svg></a>
@@ -408,10 +425,10 @@
 
   <div class="container footer-bottom">
     <p>&copy; <span id="copyrightYear">2026</span> DigiMicros. Future-proofing Businesses. All Rights Reserved.</p>
-    <p>Dallas, Texas, United States &middot; 1 (800) 647-3107</p>
+    <p>1 (800) 647-3107</p>
   </div>
 </footer>
 
-<script src="/js/main.js?v=20260912002529" defer></script>
+<script src="/js/main.js?v=20260919133655" defer></script>
 </body>
 </html>

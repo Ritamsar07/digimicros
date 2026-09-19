@@ -384,31 +384,145 @@
   }
 
   /* -----------------------------------------------------------------------
-     Form handling (demo only, no backend wired up)
+     Form delivery
+     Every form posts to FormSubmit, which emails the submission to the
+     DigiMicros inbox. The first submission triggers a one-time activation
+     email to that inbox; nothing is delivered until it is confirmed.
      ----------------------------------------------------------------------- */
-  function handleDemoForm(formId, successId, resetDelay) {
+  var FORM_ENDPOINT = "https://formsubmit.co/ajax/digimicros25@gmail.com";
+
+  function formMessage(form, className, text) {
+    var el = form.querySelector("." + className);
+    if (!el) {
+      el = document.createElement("p");
+      el.className = className;
+      el.setAttribute("role", className === "form-error" ? "alert" : "status");
+      form.appendChild(el);
+    }
+    if (text) el.textContent = text;
+    return el;
+  }
+
+  function wireForm(formId, successId, subject, resetDelay, autoReply) {
     var form = document.getElementById(formId);
-    var success = document.getElementById(successId);
     if (!form) return;
+    var success = document.getElementById(successId);
+    var submitBtn = form.querySelector('[type="submit"]');
+
+    // Honeypot: invisible to people, bots fill it in and FormSubmit drops them
+    var honey = document.createElement("input");
+    honey.type = "text";
+    honey.name = "_honey";
+    honey.tabIndex = -1;
+    honey.autocomplete = "off";
+    honey.setAttribute("aria-hidden", "true");
+    honey.style.cssText = "position:absolute;left:-9999px;width:1px;height:1px;opacity:0;";
+    form.appendChild(honey);
+
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       if (!form.checkValidity()) {
         form.reportValidity();
         return;
       }
-      if (success) success.classList.add("is-visible");
-      form.reset();
-      if (success) {
-        window.setTimeout(function () {
-          success.classList.remove("is-visible");
-        }, resetDelay || 6000);
+
+      var error = form.querySelector(".form-error");
+      if (error) error.classList.remove("is-visible");
+
+      var data = new FormData(form);
+      data.append("_subject", "DigiMicros website: " + subject);
+      data.append("_template", "table");
+      data.append("_captcha", "false");
+      data.append("Submitted from", window.location.href);
+      if (data.get("email")) {
+        data.append("_replyto", data.get("email"));
+        // FormSubmit sends this text to the visitor's own address as a confirmation
+        if (autoReply) data.append("_autoresponse", autoReply);
       }
+
+      var btnLabel = submitBtn ? submitBtn.innerHTML : "";
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        if (submitBtn.textContent.trim()) submitBtn.textContent = "Sending...";
+      }
+
+      fetch(FORM_ENDPOINT, {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: data
+      })
+        .then(function (res) {
+          return res.json().then(function (json) { return { ok: res.ok, json: json }; });
+        })
+        .then(function (r) {
+          if (!r.ok || String(r.json.success) !== "true") throw new Error(r.json.message || "send failed");
+          form.reset();
+          if (success) {
+            success.classList.add("is-visible");
+            window.setTimeout(function () { success.classList.remove("is-visible"); }, resetDelay || 6000);
+          }
+        })
+        .catch(function () {
+          formMessage(form, "form-error",
+            "Sorry, that didn't go through. Please try again, or call us on 1 (800) 647-3107.")
+            .classList.add("is-visible");
+        })
+        .then(function () {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = btnLabel;
+          }
+        });
     });
   }
-  handleDemoForm("meetingForm", "mtgSuccess");
-  handleDemoForm("getInTouchForm", "gitSuccess");
-  handleDemoForm("callbackForm", "callbackSuccess", 5000);
-  handleDemoForm("contactPageForm", "cSuccess");
+
+  var SIGN_OFF = "\n\nIf anything is urgent, call us on 1 (800) 647-3107.\n\nThe DigiMicros Team\nExcellence Of Execution";
+
+  wireForm("meetingForm", "mtgSuccess", "Meeting request", null,
+    "Thank you for requesting a meeting with DigiMicros.\n\n" +
+    "We've received your request, and one of our advisors will contact you within one business day " +
+    "to confirm a time that works for you." + SIGN_OFF);
+
+  wireForm("contactPageForm", "cSuccess", "Contact form message", null,
+    "Thank you for contacting DigiMicros.\n\n" +
+    "We've received your message, and one of our advisors will get back to you within one business day." +
+    SIGN_OFF);
+
+  wireForm("callbackForm", "callbackSuccess", "Call-back request", 5000);
+
+  /* -----------------------------------------------------------------------
+     Meeting request: date / time / time zone helpers
+     - open the native calendar on click instead of making people type
+     - block past dates
+     - preselect the visitor's own time zone when we can detect it
+     ----------------------------------------------------------------------- */
+  var mtgDate = document.getElementById("mtgDate");
+  if (mtgDate) {
+    var today = new Date();
+    var pad = function (n) { return String(n).padStart(2, "0"); };
+    mtgDate.min = today.getFullYear() + "-" + pad(today.getMonth() + 1) + "-" + pad(today.getDate());
+  }
+
+  // showPicker() lets a click anywhere on the field open the native picker.
+  // It throws if called without a user gesture, so it is guarded.
+  document.querySelectorAll('input[type="date"], input[type="time"]').forEach(function (input) {
+    input.addEventListener("click", function () {
+      if (typeof input.showPicker === "function") {
+        try { input.showPicker(); } catch (err) { /* not user-initiated, ignore */ }
+      }
+    });
+  });
+
+  var mtgTimezone = document.getElementById("mtgTimezone");
+  if (mtgTimezone && window.Intl && Intl.DateTimeFormat) {
+    try {
+      var localZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      var match = Array.prototype.find.call(mtgTimezone.options, function (opt) {
+        return opt.value === localZone;
+      });
+      if (match) mtgTimezone.value = localZone;
+    } catch (err) { /* keep the default selection */ }
+  }
 
   /* -----------------------------------------------------------------------
      Footer copyright year
